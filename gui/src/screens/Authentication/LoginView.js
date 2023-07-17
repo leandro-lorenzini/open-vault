@@ -19,6 +19,7 @@ export default function LoginView(props) {
 			props.setUser(user);
 		}).catch(error => {
 			if (error.response?.status === 401) {
+				// eslint-disable-next-line sonarjs/no-duplicate-string
 				openNotification('error', 'Operation error', 'Incorrect user and/or password.');
 			} else {
 				openNotification('error', 'Operation error', 'An unexpected error has happened.');
