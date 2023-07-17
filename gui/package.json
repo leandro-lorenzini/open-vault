@@ -1,0 +1,70 @@
+{
+  "name": "vault",
+  "version": "0.1.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "productName": "vault",
+  "description": "Securely store and share passwords whithin an organization",
+  "author": {
+    "name": "Leandro Lorenzini",
+    "email": "leandro.lorenzini@outlook.com",
+    "url": "https://github.com/leandro-lorenzini"
+  },
+  "repository": {
+    "url": "https://github.com/leandro-lorenzini/vault"
+  },
+  "main": "src/electron.js",
+  "homepage": "./",
+  "dependencies": {
+    "@carbon/react": "^1.30.0",
+    "@electron-forge/maker-dmg": "^6.2.1",
+    "antd": "^5.6.0",
+    "axios": "^1.4.0",
+    "copy-to-clipboard": "^3.3.3",
+    "crypto-js": "^4.1.1",
+    "electron-is-dev": "^2.0.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "jsencrypt": "^3.3.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.11.2",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "react": "eslint . --fix && react-scripts start",
+    "build": "react-scripts build",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      "last 1 chrome version"
+    ],
+    "development": [
+      "last 1 chrome version"
+    ]
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.2.1",
+    "@electron-forge/maker-deb": "^6.2.1",
+    "@electron-forge/maker-rpm": "^6.2.1",
+    "@electron-forge/maker-squirrel": "^6.2.1",
+    "@electron-forge/maker-zip": "^6.2.1",
+    "@electron-forge/plugin-auto-unpack-natives": "^6.2.1",
+    "electron": "^25.0.1",
+    "eslint": "^8.42.0",
+    "eslint-plugin-no-unsanitized": "^4.0.2",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-security": "^1.7.1",
+    "eslint-plugin-sonarjs": "^0.19.0",
+    "eslint-plugin-xss": "^0.1.12"
+  }
+}

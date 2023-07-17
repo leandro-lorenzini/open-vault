@@ -1,0 +1,30 @@
+{
+    "env": {
+        "commonjs": true,
+        "es2021": true,
+        "node": true
+    },
+    "plugins": [
+        "sonarjs",
+        "xss",
+        "no-unsanitized"  
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:security/recommended",
+        "plugin:sonarjs/recommended",
+        "plugin:xss/recommended",
+        "plugin:no-unsanitized/DOM",
+        "plugin:prettier/recommended"
+
+    ],
+    "rules": {
+        "prettier/prettier": "error",
+        "sonarjs/no-duplicate-string": 1
+    },
+    "overrides": [
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    }
+}

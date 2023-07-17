@@ -1,0 +1,40 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0, shrink-to-fit=no')
+  title Download Desktop App
+  link(rel='stylesheet' href='/assets/bootstrap.min.css')
+  link(rel='stylesheet' href='/assets/style.css')
+section.py-4.py-xl-5
+  .container
+    .row.mb-5
+      .col-md-8.col-xl-6.text-center.mx-auto
+        h2 Download Desktop App
+        p
+          | Now that your account is active, download the desktop application and login to securely share passwords.
+    .row.d-flex.justify-content-center
+      .col-md-10.col-xl-6
+        .card.mb-10
+          .card-body.d-flex.flex-column
+            if mac
+              .mb-3
+                h4 macOs
+                ul
+                  li
+                    a(href=`/assets/vault-${version}-x64.dmg`) macOs installer (.dmg)
+            if windows
+              .mb-3
+                h4 Windows
+                ul
+                  li
+                    a(href=`/assets/MyApp Setup ${version}.exe`) Windows 64-bit (.exe)
+            if linux
+              .mb-3
+                h4 Linux
+                ul
+                  li
+                    a(href=`/assets/MyApp_${version}_amd64.deb`) Ubuntu/Debian package (.deb)
+                  li
+                    a(href=`/assets/MyApp-${version}.x86_64.rpm`) CentOS/Fedora package (.rpm)
+              
+script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js')

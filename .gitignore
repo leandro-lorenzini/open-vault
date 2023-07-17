@@ -1,0 +1,14 @@
+# dependencies
+/gui/node_modules
+/server/node_modules
+
+# production
+/gui/build
+/gui/out
+
+# Sensitive information
+*.pem
+*.env.local
+
+# Metadata
+*.DS_Store

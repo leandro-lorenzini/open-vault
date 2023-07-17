@@ -1,0 +1,14 @@
+doctype html
+head
+    title Activation Email
+    script(type='text/javascript').
+        if (foo) bar(1 + 5)
+body
+    h1 Vault - Activation Email
+    #container.col
+        p Hello #{name},
+        p Your organization's administrator has created a vault account for you, so now you can securely share passwords with your colleagues.
+        p Click&nbsp;
+            a(href=`${APP_URL}auth/activate?email=${email}&token=${token}`) here 
+            | to activate your account.
+            

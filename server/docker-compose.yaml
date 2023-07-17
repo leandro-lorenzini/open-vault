@@ -1,0 +1,34 @@
+version: "3"
+services:
+  app:
+    container_name: nodejs_app
+    restart: always
+    build: .
+    ports:
+      - "443:8000"
+    links:
+      - mongo
+    environment: 
+      DATABASE_URL: mongodb://<MongoUser>:<MongoPassword>@mongo:27017/vault?authSource=admin
+      URL: https://localhost
+      PORT: 8000
+      SESSION_SECRET: <SECRET>
+      INSTALLER_VERSION: 0.1.0
+      WINDOWS_INSTALLER: true
+      MAC_INSTALLER: true
+      LINUX_INSTALLER: true
+
+
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    volumes:
+      - mongodata:/data/db
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: <MongoUser>
+      MONGO_INITDB_ROOT_PASSWORD: <MongoPassword>
+
+volumes:
+  mongodata:
