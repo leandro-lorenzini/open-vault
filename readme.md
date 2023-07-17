@@ -1,5 +1,5 @@
 # About this project
-Vault is password manager designed for small and medium organizations with support to SAML authentication, it allows teams to share passwords for those applications that do not support identity management. 
+Open-vault is password manager designed for small and medium organizations with support to SAML authentication, it allows teams to share passwords for those applications that do not support identity management. 
 This is a new project, and I only work on it during my free time, so I'm more than happy to have collaborators. Fell free to challenge the concept, the code logic and to create pull requests.
 
 #### Todo
