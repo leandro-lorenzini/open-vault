@@ -4,16 +4,6 @@
 Open-vault is password manager designed for small and medium organizations with support to SAML authentication, it allows teams to share passwords for those applications that do not support identity management. 
 This is a new project, and I only work on it during my free time, so I'm more than happy to have collaborators. Feel free to challenge the concept, the code logic and to create pull requests.
 
-#### Todo
-- [ ] Test client
-    - [X] Test client for MacOs
-    - [ ] Test client for Linux
-    - [ ] Test client for Windows
-- [ ] Code review/Analysis
-    - [ ] Client source code
-    - [ ] Server source code
-- [ ] Support TOTP
-
 ## How it works
 When a user connects to the client in a device for the first time, a private and public key are generated. The private key is encrypted with an additional password (called as local key) and then saved to the local disk, the public key is sent to the server. A user will have multiple key pairs if the user connects to the server using more than one device. The local key can be different from device to device for a single user as that password is not stored in the server and it's simply used to decrypt the user's private key in a specific device.
 
