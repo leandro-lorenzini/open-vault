@@ -10,10 +10,6 @@ module.exports = {
 			config: {},
 		},
 		{
-			name: "@electron-forge/maker-zip",
-			platforms: ["darwin"],
-		},
-		{
 			name: '@electron-forge/maker-dmg',
 			config: {
 				format: 'ULFO'
