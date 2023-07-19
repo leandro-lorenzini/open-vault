@@ -377,13 +377,14 @@ Router.get('/sync/:recovery?', async (req, res) => {
             .map((vault) => vault.key.toString());
 
           for (let user of users) {
-            let accessible = user.groups.filter(
-              (groupId) =>
-                folder.groups?.includes(groupId) ||
-                folder.user.toString() === user._id.toString()
+            let accessible = user.groups.filter((groupId) =>
+              folder.groups?.includes(groupId)
             );
 
-            if (accessible.length) {
+            if (
+              accessible.length ||
+              folder.user.toString() === user._id.toString()
+            ) {
               for (let key of user.keys) {
                 if (!keys.includes(key._id.toString())) {
                   missing.push({
@@ -421,7 +422,8 @@ Router.get('/sync/:recovery?', async (req, res) => {
         let users = await userController.all(req.organization);
         let folders = await secretController.acessible(
           user.organization,
-          group
+          group,
+          req.user
         );
 
         for (let folder of folders) {
@@ -433,9 +435,13 @@ Router.get('/sync/:recovery?', async (req, res) => {
 
             for (let user of users) {
               let accessible = user.groups.filter((groupId) =>
-                folder.groups.includes(groupId)
+                folder.groups?.includes(groupId)
               );
-              if (accessible.length) {
+
+              if (
+                accessible.length ||
+                folder.user.toString() === user._id.toString()
+              ) {
                 for (let key of user.keys) {
                   if (!keys.includes(key._id.toString())) {
                     missing.push({
