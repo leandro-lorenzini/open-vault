@@ -127,7 +127,7 @@ function App() {
 			<div className='init-container' style={{ backgroundColor: backgroundColorContent(darkMode)}}>
 				<Routes>
 					<Route path="/loading" element={<></>}/>
-					<Route path="setup" element={<SetupView
+					<Route path="/setup" element={<SetupView
 						setOrganization={setOrganization} 
 						setSignup={() => navigate('/signup')} 
 						setLogin={() => navigate('/signin')} 
@@ -156,7 +156,7 @@ function App() {
 							navigate('/local');
 						}}
 					/>}/>
-					<Route path="forgot-password" element={<ForgotPasswordView 
+					<Route path="/forgot-password" element={<ForgotPasswordView 
 						setLogin={() => {
 							navigate('/signin');
 						}} 
