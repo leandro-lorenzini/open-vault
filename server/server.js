@@ -6,6 +6,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const RateLimit = require('express-rate-limit');
 const isAuthenticated = require('./src/helper/authenticated.middleware');
 
 // Express settings
@@ -22,6 +23,12 @@ app.use(
     credentials: true,
   })
 );
+app.use(
+  RateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 30,
+  })
+);
 
 // Session settings
 app.use(
@@ -33,7 +40,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: {
-      httpOnly: false,
+      httpOnly: true,
       secure: true,
       sameSite: 'none',
       maxAge: 3600000 * 12,
