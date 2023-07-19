@@ -14,7 +14,7 @@ Router.post('/', isAdmin, (req, res) => {
   }).validate(req.body);
 
   if (error) {
-    return res.status(400).send(error.details);
+    return res.status(400).json(error.details);
   }
 
   userController
@@ -50,7 +50,7 @@ Router.patch('/:userId', isAdmin, (req, res) => {
   }).validate({ ...req.body, ...req.params });
 
   if (error) {
-    return res.status(400).send(error.details);
+    return res.status(400).json(error.details);
   }
 
   userController

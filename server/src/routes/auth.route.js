@@ -20,7 +20,7 @@ Router.post('/signup', async (req, res) => {
   }).validate(req.body);
 
   if (error) {
-    return res.status(400).send(error.details);
+    return res.status(400).json(error.details);
   }
 
   try {
@@ -76,7 +76,7 @@ Router.post('/', (req, res) => {
   }).validate(req.body);
 
   if (error) {
-    return res.status(400).send(error.details);
+    return res.status(400).json(error.details);
   }
 
   userController
@@ -253,7 +253,7 @@ Router.put('/reset-password', (req, res) => {
   }).validate(req.body);
 
   if (error) {
-    return res.status(400).send(error.details);
+    return res.status(400).json(error.details);
   }
 
   userController.find(value.email).then((user) => {

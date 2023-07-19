@@ -15,7 +15,7 @@ Router.patch('/move', (req, res) => {
   }).validate(req.body);
 
   if (error) {
-    return res.status(400).send(error.details);
+    return res.status(400).json(error.details);
   }
 
   secretController
@@ -42,7 +42,7 @@ Router.post('/', (req, res) => {
   }).validate({ ...req.body, ...req.params });
 
   if (error) {
-    return res.status(400).send(error.details);
+    return res.status(400).json(error.details);
   }
 
   secretController
@@ -100,7 +100,7 @@ Router.delete('/:secretId', (req, res) => {
   }).validate({ ...req.params });
 
   if (error) {
-    return res.status(400).send(error.details);
+    return res.status(400).json(error.details);
   }
 
   secretController
@@ -129,7 +129,7 @@ Router.patch('/:secretId', (req, res) => {
   }).validate({ ...req.body, ...req.params });
 
   if (error) {
-    return res.status(400).send(error.details);
+    return res.status(400).json(error.details);
   }
 
   secretController
@@ -219,7 +219,7 @@ Router.post('/:secretId/vault', (req, res) => {
   }).validate({ ...req.body, ...req.params });
 
   if (error) {
-    return res.status(400).send(error.details);
+    return res.status(400).json(error.details);
   }
 
   secretController
@@ -270,7 +270,7 @@ Router.patch('/:secretId/vault', (req, res) => {
   }).validate({ ...req.body, ...req.params });
 
   if (error) {
-    return res.status(400).send(error.details);
+    return res.status(400).json(error.details);
   }
 
   secretController
@@ -317,7 +317,7 @@ Router.get('/key/:key', (req, res) => {
   }).validate(req.params);
 
   if (error) {
-    return res.status(400).send(error.details);
+    return res.status(400).json(error.details);
   }
 
   userController.get(req.organization, req.user).then((user) => {

@@ -38,7 +38,7 @@ Router.post('/key', (req, res) => {
   }).validate(req.body);
 
   if (error) {
-    return res.status(400).send(error.details);
+    return res.status(400).json(error.details);
   }
   userController.key
     .add(req.organization, req.user, value.value, value.device)
@@ -61,7 +61,7 @@ Router.delete('/key/:id', (req, res) => {
   }).validate(req.params);
 
   if (error) {
-    return res.status(400).send(error.details);
+    return res.status(400).json(error.details);
   }
 
   userController.key
@@ -83,7 +83,7 @@ Router.post('/change-password', (req, res) => {
   }).validate(req.body);
 
   if (error) {
-    return res.status(400).send(error.details);
+    return res.status(400).json(error.details);
   }
 
   userController

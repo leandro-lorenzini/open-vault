@@ -43,7 +43,7 @@ Router.post('/group', isAdmin, (req, res) => {
   }).validate(req.body);
 
   if (error) {
-    return res.status(400).send(error.details);
+    return res.status(400).json(error.details);
   }
 
   organization.group
@@ -71,7 +71,7 @@ Router.patch('/group/:groupId', isAdmin, (req, res) => {
   }).validate({ ...req.body, ...req.params });
 
   if (error) {
-    return res.status(400).send(error.details);
+    return res.status(400).json(error.details);
   }
 
   organization.group
@@ -108,7 +108,7 @@ Router.put('/sso', isAdmin, (req, res) => {
   }).validate(req.body);
 
   if (error) {
-    return res.status(400).send(error.details);
+    return res.status(400).json(error.details);
   }
 
   organization.sso
@@ -137,7 +137,7 @@ Router.put('/smtp', isAdmin, (req, res) => {
   }).validate(req.body);
 
   if (error) {
-    return res.status(400).send(error.details);
+    return res.status(400).json(error.details);
   }
 
   organization
