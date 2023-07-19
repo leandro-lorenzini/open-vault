@@ -21,7 +21,7 @@ function createWindow() {
 	win = new BrowserWindow({
 		width: 1200,
 		height: 700,
-		frame: false,
+		frame: process.platform !== 'darwin' ? true : false,
 		transparent: true,
 		webPreferences: {
 			nodeIntegration: false,
@@ -30,7 +30,7 @@ function createWindow() {
 			preload: path.join(__dirname, 'preload.js')
 		},
 		trafficLightPosition: { x: 10, y: 13 },
-		titleBarStyle: 'hidden',
+		titleBarStyle: process.platform !== 'darwin' ? 'default' : 'hidden',
 	});
 
 	win.loadURL(
