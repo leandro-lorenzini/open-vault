@@ -1,9 +1,9 @@
 {
-  "name": "vault",
-  "version": "0.1.0",
-  "private": true,
-  "license": "UNLICENSED",
-  "productName": "vault",
+  "name": "open-vault",
+  "version": "0.0.2",
+  "private": false,
+  "license": "MIT",
+  "productName": "Open-Vault",
   "description": "Securely store and share passwords whithin an organization",
   "author": {
     "name": "Leandro Lorenzini",
