@@ -22,7 +22,7 @@ function createWindow() {
 		width: 1200,
 		height: 700,
 		frame: process.platform !== 'darwin' ? true : false,
-		transparent: true,
+		transparent: process.platform !== 'darwin' ? false : true,
 		webPreferences: {
 			nodeIntegration: false,
 			contextIsolation: true,
@@ -32,6 +32,10 @@ function createWindow() {
 		trafficLightPosition: { x: 10, y: 13 },
 		titleBarStyle: process.platform !== 'darwin' ? 'default' : 'hidden',
 	});
+
+	if (process.platform !== 'darwin') {
+		win.setMenuBarVisibility(false);
+	}
 
 	win.loadURL(
 		isDev
