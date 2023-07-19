@@ -33,7 +33,7 @@ Router.get('/', (req, res) => {
       });
     })
     .catch((error) => {
-      res.status(500).send(error);
+      res.status(500).send();
     });
 });
 Router.post('/group', isAdmin, (req, res) => {
@@ -60,7 +60,7 @@ Router.post('/group', isAdmin, (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.status(500).send(error);
+      res.status(500).send();
     });
 });
 Router.patch('/group/:groupId', isAdmin, (req, res) => {
@@ -85,7 +85,7 @@ Router.patch('/group/:groupId', isAdmin, (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.status(500).send(error);
+      res.status(500).send();
     });
 });
 Router.delete('/group/:groupId', isAdmin, (req, res) => {
@@ -96,7 +96,7 @@ Router.delete('/group/:groupId', isAdmin, (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.status(500).send(error);
+      res.status(500).send();
     });
 });
 Router.put('/sso', isAdmin, (req, res) => {
@@ -124,7 +124,7 @@ Router.put('/sso', isAdmin, (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.status(500).send(error);
+      res.status(500).send();
     });
 });
 Router.put('/smtp', isAdmin, (req, res) => {
@@ -162,7 +162,7 @@ Router.put('/smtp', isAdmin, (req, res) => {
         })
         .catch((error) => {
           console.log(error);
-          res.status(500).send(error);
+          res.status(500).send();
         });
     })
     .catch((error) => {

@@ -27,7 +27,7 @@ Router.get('/', (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.status(500).send(error);
+      res.status(500).send();
     });
 });
 // Add key to user
@@ -51,7 +51,7 @@ Router.post('/key', (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.status(500).send(error);
+      res.status(500).send();
     });
 });
 // Delete key from user
@@ -71,7 +71,7 @@ Router.delete('/key/:id', (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.status(500).send(error);
+      res.status(500).send();
     });
 });
 // Change password

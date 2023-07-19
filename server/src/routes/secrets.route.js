@@ -90,7 +90,7 @@ Router.post('/', (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.status(500).send(error);
+      res.status(500).send();
     });
 });
 Router.delete('/:secretId', (req, res) => {
@@ -199,13 +199,13 @@ Router.patch('/:secretId', (req, res) => {
           })
           .catch((error) => {
             console.log(error);
-            res.status(500).send(error);
+            res.status(500).send();
           });
       }
     })
     .catch((error) => {
       console.log(error);
-      res.status(500).send(error);
+      res.status(500).send();
     });
 });
 Router.post('/:secretId/vault', (req, res) => {
@@ -301,13 +301,13 @@ Router.patch('/:secretId/vault', (req, res) => {
           })
           .catch((error) => {
             console.log(error);
-            res.status(500).send(error);
+            res.status(500).send();
           });
       }
     })
     .catch((error) => {
       console.log(error);
-      res.status(500).send(error);
+      res.status(500).send();
     });
 });
 // eslint-disable-next-line sonarjs/cognitive-complexity
@@ -356,7 +356,7 @@ Router.get('/key/:key', (req, res) => {
       })
       .catch((error) => {
         console.log(error);
-        res.status(500).send(error);
+        res.status(500).send();
       });
   });
 });
@@ -632,7 +632,7 @@ Router.get('/recovery', (req, res) => {
       })
       .catch((error) => {
         console.log(error);
-        res.status(500).send(error);
+        res.status(500).send();
       });
   });
 });

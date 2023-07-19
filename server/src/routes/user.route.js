@@ -37,7 +37,7 @@ Router.post('/', isAdmin, (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.status(500).send(error);
+      res.status(500).send();
     });
 });
 Router.patch('/:userId', isAdmin, (req, res) => {
@@ -73,7 +73,7 @@ Router.patch('/:userId', isAdmin, (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.status(500).send(error);
+      res.status(500).send();
     });
 });
 Router.get('/', (req, res) => {
@@ -102,7 +102,7 @@ Router.get('/', (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.status(500).send(error);
+      res.status(500).send();
     });
 });
 

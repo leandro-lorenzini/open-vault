@@ -32,7 +32,7 @@ Router.post('/', (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.status(500).send(error);
+      res.status(500).send();
     });
 });
 Router.patch('/:folderId', (req, res) => {
@@ -57,7 +57,7 @@ Router.patch('/:folderId', (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.status(500).send(error);
+      res.status(500).send();
     });
 });
 Router.get('/', (req, res) => {
@@ -78,7 +78,7 @@ Router.get('/', (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.status(500).send(error);
+      res.status(500).send();
     });
 });
 Router.get('/all', (req, res) => {
@@ -98,7 +98,7 @@ Router.get('/all', (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.status(500).send(error);
+      res.status(500).send();
     });
 });
 module.exports = Router;
