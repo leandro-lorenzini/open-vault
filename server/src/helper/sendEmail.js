@@ -6,6 +6,12 @@ const organizationController = require('../controllers/organization.controller')
 async function sendEmail(org, to, subject, template, data) {
   try {
     let organization = await organizationController.get(org);
+
+    if (!organization.smtp?.server) {
+      console.log('SMTP server not configured yet.');
+      return false;
+    }
+
     let transporter = nodemailer.createTransport({
       host: organization.smtp.server,
       port: organization.smtp.port,

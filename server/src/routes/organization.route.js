@@ -17,11 +17,11 @@ Router.get('/', (req, res) => {
         key: org.key,
         sso: org.sso,
         smtp: {
-          server: org.smtp.server,
-          port: org.smtp.port,
-          secure: org.smtp.secure,
-          username: org.smtp.username,
-          password: await hash(org.smtp.password),
+          server: org.smtp?.server,
+          port: org.smtp?.port,
+          secure: org.smtp?.secure,
+          username: org.smtp?.username,
+          password: org.smtp?.password ? await hash(org.smtp.password) : null,
         },
         groups: org.groups.map((group) => {
           return {
@@ -33,6 +33,7 @@ Router.get('/', (req, res) => {
       });
     })
     .catch((error) => {
+      console.log(error);
       res.status(500).send();
     });
 });
