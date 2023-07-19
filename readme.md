@@ -1,3 +1,5 @@
+[![CodeQL](https://github.com/leandro-lorenzini/open-vault/actions/workflows/github-code-scanning/codeql/badge.svg?branch=main)](https://github.com/leandro-lorenzini/open-vault/actions/workflows/github-code-scanning/codeql)
+[![Build](https://github.com/leandro-lorenzini/open-vault/actions/workflows/build.yaml/badge.svg)](https://github.com/leandro-lorenzini/open-vault/actions/workflows/build.yaml)
 # About this project
 Open-vault is password manager designed for small and medium organizations with support to SAML authentication, it allows teams to share passwords for those applications that do not support identity management. 
 This is a new project, and I only work on it during my free time, so I'm more than happy to have collaborators. Feel free to challenge the concept, the code logic and to create pull requests.
