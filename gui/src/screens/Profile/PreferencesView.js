@@ -31,6 +31,14 @@ export default function PreferencesView(props) {
 						/>
 					</Form.Item>
 				</Form>
+				{ process.env.REACT_APP_VERSION ?
+					<>
+						<Typography.Title level={5}>Client information</Typography.Title>
+						<Typography.Paragraph>
+							Build version: { process.env.REACT_APP_VERSION }
+						</Typography.Paragraph>
+					</>:<></>
+				}
 			</div>
 		</div>
 	</div>;

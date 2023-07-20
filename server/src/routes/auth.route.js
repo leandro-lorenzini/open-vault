@@ -118,9 +118,9 @@ Router.post('/', (req, res) => {
 
 Router.get('/', (req, res) => {
   if (req.session.user) {
-    res.send(req.session.user);
+    res.json(req.session.user);
   } else {
-    res.status(301).send({ code: 'NotAuthenticated' });
+    res.send();
   }
 });
 

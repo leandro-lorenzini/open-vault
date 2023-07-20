@@ -27,7 +27,7 @@ function Refresh(props) {
 
 	const isAuthenticated = () => {
 		api.auth.isAuthenticated().then(user => {
-			if (!user) {
+			if (!user || !user.id || !user.organization) {
 				console.log('User no longer authenticated, clear memory.');
 				props.setUser(null);
 				props.setUsers([]);
@@ -35,14 +35,11 @@ function Refresh(props) {
 				props.setSecrets([]);
 				props.setOrganization({});
 				props.setLocalPassword({});
+			} else {
+				props.setConnectionError(false);
 			}
 		}).catch(() => {
-			console.log('User no longer authenticated, clear memory.');
-			props.setUser(null);
-			props.setUsers([]);
-			props.setFolders([]);
-			props.setSecrets([]);
-			props.setOrganization({});
+			props.setConnectionError(true);
 		});
 	};
 

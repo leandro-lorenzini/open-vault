@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
-import { ConfigProvider, theme, Col, Row } from 'antd';
+import { ConfigProvider, theme, Col, Row, Typography } from 'antd';
 import LoginView from './screens/Authentication/LoginView';
 import SecretsView from './screens/Secrets/SecretsView';
 import api from './services/api';
@@ -37,8 +37,8 @@ function App() {
 	const [darkModePrefence, setDarkModePreference] = useState(localStorage.getItem('darkMode'));
 	const [authenticated, setAuthenticated] = useState(false);
 	const [recovery, setRecovery] = useState(false);
-
 	const [dragSecret, setDragSecret] = useState(null);
+	const [connectionError, setConnectionError] = useState(false);
 
 	const navigate = useNavigate();
 
@@ -123,7 +123,7 @@ function App() {
 	 * Pre-authentication routes 
 	 */
 	if (!authenticated || !localPassword) {
-		return <ConfigProvider theme={{ algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm }}>
+		return <ConfigProvider theme={getTheme()}>
 			<div className='init-container' style={{ backgroundColor: backgroundColorContent(darkMode)}}>
 				<Routes>
 					<Route path="/loading" element={<></>}/>
@@ -189,75 +189,91 @@ function App() {
 				outOfSync={outOfSync} 
 				user={user} 
 				localPassword={localPassword}/>
-			<Row style={{ height: '100%' }}>
-				<Col 
-					className='drag'
-					span={6} 
-					style={{ 
-						height: '100%',
-						opacity: 0.98,
-						alignItems: 'stretch',
-						padding: 10,
-						paddingTop: 40,
-						borderRight: '1px solid rgba(5, 5, 5, 0.06)', 
-						backgroundColor: backgroundColor(darkMode),
-					}}>
-					<SideMenu 
-						setDragSecret={setDragSecret}
-						dragSecret={dragSecret}
-						setFolders={setFolders}
-						recovery={recovery}
-						folders={folders} 
-						users={users} 
-						setSelectedFolder={setSelectedFolder} 
-						selectedFolder={selectedFolder}
-						organization={organization}
-						user={user}
-					/>
-				</Col>
-				<Col 
-					span={18} 
-					style={{ 
-						height: '100%',
-						backgroundColor: backgroundColorContent(darkMode),
-						paddingBottom: 0
-					}}>
-					<Routes>
-						<Route path="/settings">
-							<Route path='dashboard' element={<DashboardView />} />
-							<Route path='authentication' element={<AuthenticationView />} />
-							<Route path='smtp' element={<SmtpView organization={organization} />} />
-							<Route path='users' element={<UsersView organization={organization} />} />
-							<Route path='groups' element={<GroupsView organization={organization} />} />
-							<Route path='folders' element={<FoldersView organization={organization} />} />
-							<Route path='recovery' element={<RecoveryView setRecovery={setRecovery} recovery={recovery} />} />
-						</Route>
-						<Route path='/change-password' element={<ChangePasswordView user={user} setLocalPassword={setLocalPassword}/>}/>
-						<Route path='/preferences' element={<PreferencesView setDarkModePreference={setDarkModePreference} />}/>
-						<Route path="/secrets" element={<SecretsView
+
+			{ connectionError ? 
+				<div className='init-container' style={{ backgroundColor: backgroundColorContent(darkMode)}}>
+					<div>
+						<Typography.Title level={2}>You are offline</Typography.Title>
+						<Typography.Title level={4}>
+							It looks like we cannot connect to the server.
+						</Typography.Title>
+						<Typography.Title level={5} style={{ marginTop: 0 }}>
+							We will try again in a few seconds, please check your internet connection in the meantime.
+						</Typography.Title>
+					</div>
+				</div>
+				:
+				<Row style={{ height: '100%' }}>
+					<Col 
+						className='drag'
+						span={6} 
+						style={{ 
+							height: '100%',
+							opacity: 0.98,
+							alignItems: 'stretch',
+							padding: 10,
+							paddingTop: 40,
+							borderRight: '1px solid rgba(5, 5, 5, 0.06)', 
+							backgroundColor: backgroundColor(darkMode),
+						}}>
+						<SideMenu 
 							setDragSecret={setDragSecret}
-							recovery={recovery}
-							user={user} 
-							secrets={secrets} 
-							selectedSecret={selectedSecret} 
-							selectedFolder={selectedFolder} 
-							setSelectedFolder={setSelectedFolder}
-							setSecrets={setSecrets}
-							setSelectedSecret={setSelectedSecret}
-							localPassword={localPassword}
-							keys={keys}
-							folders={folders}
+							dragSecret={dragSecret}
 							setFolders={setFolders}
+							recovery={recovery}
+							folders={folders} 
+							users={users} 
+							setSelectedFolder={setSelectedFolder} 
+							selectedFolder={selectedFolder}
 							organization={organization}
-							darkMode={darkMode}
-						/>} />
-						<Route path="*" element={<Navigate to='/secrets'/>}/>
-						
-					</Routes>
-				</Col>
-			</Row>
+							user={user}
+						/>
+					</Col>
+					<Col 
+						span={18} 
+						style={{ 
+							height: '100%',
+							backgroundColor: backgroundColorContent(darkMode),
+							paddingBottom: 0
+						}}>
+						<Routes>
+							<Route path="/settings">
+								<Route path='dashboard' element={<DashboardView />} />
+								<Route path='authentication' element={<AuthenticationView />} />
+								<Route path='smtp' element={<SmtpView organization={organization} />} />
+								<Route path='users' element={<UsersView organization={organization} />} />
+								<Route path='groups' element={<GroupsView organization={organization} />} />
+								<Route path='folders' element={<FoldersView organization={organization} />} />
+								<Route path='recovery' element={<RecoveryView setRecovery={setRecovery} recovery={recovery} />} />
+							</Route>
+							<Route path='/change-password' element={<ChangePasswordView user={user} setLocalPassword={setLocalPassword}/>}/>
+							<Route path='/preferences' element={<PreferencesView setDarkModePreference={setDarkModePreference} />}/>
+							<Route path="/secrets" element={<SecretsView
+								setDragSecret={setDragSecret}
+								recovery={recovery}
+								user={user} 
+								secrets={secrets} 
+								selectedSecret={selectedSecret} 
+								selectedFolder={selectedFolder} 
+								setSelectedFolder={setSelectedFolder}
+								setSecrets={setSecrets}
+								setSelectedSecret={setSelectedSecret}
+								localPassword={localPassword}
+								keys={keys}
+								folders={folders}
+								setFolders={setFolders}
+								organization={organization}
+								darkMode={darkMode}
+							/>} />
+							<Route path="*" element={<Navigate to='/secrets'/>}/>
+							
+						</Routes>
+					</Col>
+				</Row>
+			}
 			{ user && keys && !recovery && !dragSecret ? // we don't want to refresh data right after moving a folder.
 				<Refresh 
+					setConnectionError={setConnectionError}
 					recovery={recovery}
 					user={user} 
 					keys={keys}
@@ -271,6 +287,7 @@ function App() {
 
 			{ recovery && !dragSecret ?
 				<Refresh
+					setConnectionError={setConnectionError}
 					recovery={recovery}
 					user={user} 
 					keys={keys}

@@ -34,9 +34,11 @@ export default function SideMenu(props) {
 			.map((group) => group.id);
 
 		setAdmin(false);
-		for (let group of props.user.groups) {
-			if (adminGroups?.includes(group.toString())) {
-				setAdmin(true);
+		if (props.user) {
+			for (let group of props.user.groups) {
+				if (adminGroups?.includes(group.toString())) {
+					setAdmin(true);
+				}
 			}
 		}
 	}, [props.organization?.groups]);
