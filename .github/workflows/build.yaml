@@ -16,6 +16,7 @@ jobs:
 
     - name: Build react app
       run: |
+        export REACT_APP_VERSION=$(echo ${GITHUB_REF#refs/*/} | sed 's/\//-/g')
         cd gui && npm run build
         zip -r build.zip build/
 
