@@ -1,4 +1,5 @@
-import { Button, Form, Input, Typography, Modal } from 'antd';
+/* eslint-disable sonarjs/no-duplicate-string */
+import { Button, Form, Input, Typography, Modal, notification } from 'antd';
 import encryption from '../../services/encryption';
 import { useEffect, useState } from 'react';
 import { LockOutlined } from '@ant-design/icons';
@@ -8,11 +9,20 @@ import { useNavigate } from 'react-router-dom';
 function LocalPasswordView(props) {
 	const [loading, setLoading] = useState(false);
 	const [processing, setProcessing] = useState(true);
-	const [error, setError] = useState('');
 	const [existing, setExisting] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 
 	const navigate = useNavigate();
+
+	const [notificationApi, notificationHolder] = notification.useNotification();
+
+	const openNotification = (type, message, description) => {
+		// eslint-disable-next-line security/detect-object-injection
+		notificationApi[type]({
+			message: message,
+			description: description,
+		});
+	};
 
 
 	useEffect(() => {
@@ -33,7 +43,6 @@ function LocalPasswordView(props) {
 
 	function generateKeys(form) {
 		setLoading(true);
-		setError(null);
 		console.log(`Generating keys for user id ${props.user.id}.`);
 		encryption.generateKeys(props.user.id, form.local).then(async () => {
 			props.setLocalPassword(form.local);
@@ -44,10 +53,10 @@ function LocalPasswordView(props) {
 			} catch (error) {
 				console.error('Keys have been created but an error happened trying to read them.');
 				console.error(error);
-				setError('Error generating your key pairs.');
+				openNotification('error', 'Operation error', 'Error generating your key pairs.');
 			}
 		}).catch(error => {
-			setError('Error generating your key pairs.');
+			openNotification('error', 'Operation error', 'Error generating your key pairs.');
 			console.error(error);
 		}).finally(() => {
 			setLoading(false);
@@ -61,7 +70,7 @@ function LocalPasswordView(props) {
 		}).catch((error) => {
 			console.log(error);
 			setLoading(false);
-			setError('An error happened while deleting your locak key.');
+			openNotification('error', 'Operation error', 'An error happened while deleting your locak key.');
 		});
 	}
 
@@ -72,6 +81,7 @@ function LocalPasswordView(props) {
 	if (existing) {
 		return (
 			<>
+				{ notificationHolder }
 				<Form
 					style={{ maxWidth: 300 }}
 					name="normal_login"
@@ -81,7 +91,6 @@ function LocalPasswordView(props) {
 					}}
 					onFinish={async (form) => {
 						setLoading(true);
-						setError(false);
 						try {
 							let keys = await encryption.getKeys(props.user.id);
 							if (encryption.hashString(form.local) === keys.localPassword) {
@@ -90,11 +99,11 @@ function LocalPasswordView(props) {
 								props.setKeys(keys);
 								console.log(`Successfuly retreived key material for user id ${props.user.id}, login flow completed.`);
 							} else {
-								setError('Wrong local password');
+								openNotification('error', 'Authentication error', 'The entered local password is wrong.');
 								setLoading(false);
 							}
 						} catch (error) {
-							setError('Error retreiving key material');
+							openNotification('error', 'Operation error', 'Error retreiving key material.');
 							setLoading(false);
 							console.error(`Error retreiving key material for user id ${props.user.id}`);
 							console.error(error);
@@ -129,11 +138,6 @@ function LocalPasswordView(props) {
 						style={{ width: '100%' }}>
 						I don&apos;t remember my local password
 					</Button>
-
-					<Typography.Text style={{ visibility: error ? 'visible' : 'hidden' }} type='danger'>
-						{error ? error : '-'}
-					</Typography.Text>
-
 				</Form>
 				<Modal
 					title="Reset local password"
@@ -193,10 +197,6 @@ function LocalPasswordView(props) {
 							Continue
 						</Button>
 					</Form.Item>
-
-					<Typography.Text style={{ visibility: error ? 'visible' : 'hidden' }} type='danger'>
-						{error ? error : '-'}
-					</Typography.Text>
 				</Form>
 			</>);
 	}

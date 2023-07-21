@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
-import { ConfigProvider, theme, Col, Row, Typography } from 'antd';
+import { ConfigProvider, theme, Col, Row } from 'antd';
 import LoginView from './screens/Authentication/LoginView';
 import SecretsView from './screens/Secrets/SecretsView';
 import api from './services/api';
@@ -21,6 +21,7 @@ import RecoveryView from './screens/Settings/RecoveryView';
 import ChangePasswordView from './screens/Profile/ChangePasswordView';
 import PreferencesView from './screens/Profile/PreferencesView';
 import SmtpView from './screens/Settings/SmtpView';
+import ConnectionErrorView from './components/ConnectionErrorView';
 
 function App() {
 	const [user, setUser] = useState(null);
@@ -192,15 +193,11 @@ function App() {
 
 			{ connectionError ? 
 				<div className='init-container' style={{ backgroundColor: backgroundColorContent(darkMode)}}>
-					<div>
-						<Typography.Title level={2}>You are offline</Typography.Title>
-						<Typography.Title level={4}>
-							It looks like we cannot connect to the server.
-						</Typography.Title>
-						<Typography.Title level={5} style={{ marginTop: 0 }}>
-							We will try again in a few seconds, please check your internet connection in the meantime.
-						</Typography.Title>
-					</div>
+					<ConnectionErrorView 
+						setConnectionError={setConnectionError}
+						setUser={setUser}
+						setAuthenticated={setAuthenticated}
+					/>
 				</div>
 				:
 				<Row style={{ height: '100%' }}>
