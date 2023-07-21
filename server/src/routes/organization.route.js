@@ -145,6 +145,7 @@ Router.put('/smtp', isAdmin, (req, res) => {
     .get(req.organization)
     .then(async (org) => {
       let password =
+        org.smtp?.password &&
         hash(org.smtp.password) === hash(value.password)
           ? org.smtp.password
           : value.password;
