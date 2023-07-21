@@ -138,7 +138,7 @@ function generateKeys(userId, password) {
 					storedKeys[userId].publicKey = publicKeyBase64;
 					storedKeys[userId].privateKey = encryptStringWithPassword(privateKeyBase64, password);
 					storedKeys[userId].publicKeyId = result.id;
-					storedKeys[userId].localPassword = hashString(password);
+					storedKeys[userId].localPassword = hashString(password, userId);
 
 					// eslint-disable-next-line sonarjs/no-duplicate-string
 					window.electron.ipcRenderer.send('write-file', { fileName: fileName, content: JSON.stringify(storedKeys) });
@@ -183,7 +183,7 @@ function updateLocalPassword(userId, password, newPassword) {
 				if (storedKeys[userId]) {
 					let privateKeyBase64 = decryptStringWithPassword(storedKeys[userId].privateKey, password);
 					storedKeys[userId].privateKey = encryptStringWithPassword(privateKeyBase64, newPassword);
-					storedKeys[userId].localPassword = hashString(newPassword);
+					storedKeys[userId].localPassword = hashString(newPassword, userId);
 				}
 
 				window.electron.ipcRenderer.send('write-file', { fileName: fileName, content: JSON.stringify(storedKeys) });
@@ -246,9 +246,9 @@ function decryptStringWithPassword(encryptedString, password) {
 	}
 }
 
-function hashString(string) {
+function hashString(string, salt) {
 	try {
-		return CryptoJS.SHA256(string).toString(CryptoJS.enc.Hex);
+		return CryptoJS.HmacSHA256(string, salt).toString(CryptoJS.enc.Hex);
 	} catch (error) {
 		console.error('Error while hashing string');
 		console.error(error);

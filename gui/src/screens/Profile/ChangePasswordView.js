@@ -32,7 +32,7 @@ export default function ChangePasswordView(props) {
 		setProcessing(true);
 		try {
 			let keys = await encryption.getKeys(props.user.id);
-			if (encryption.hashString(form.password) === keys.localPassword) {
+			if (encryption.hashString(form.password, props.user.id) === keys.localPassword) {
 				encryption.updateLocalPassword(props.user.id, form.password, form.newPassword).then(() => {
 					openNotification('success', 'Operation successful', 'Local password has been changed');
 					props.setLocalPassword(form.newPassword);

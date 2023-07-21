@@ -93,7 +93,7 @@ function LocalPasswordView(props) {
 						setLoading(true);
 						try {
 							let keys = await encryption.getKeys(props.user.id);
-							if (encryption.hashString(form.local) === keys.localPassword) {
+							if (encryption.hashString(form.local, props.user.id) === keys.localPassword) {
 								props.setLocalPassword(form.local);
 								keys = await encryption.getKeys(props.user.id, form.local);
 								props.setKeys(keys);
