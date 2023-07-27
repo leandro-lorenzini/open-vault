@@ -50,6 +50,10 @@ function Refresh(props) {
 			api
 				.secret.recovery()
 				.then((secrets) => {
+					if (!Array.isArray(secrets)) {
+						props.setConnectionError();
+						return true;
+					}
 					console.log(`Retreived ${secrets?.length} secrets`);
 					props.setSecrets(secrets);
 				})
@@ -61,6 +65,10 @@ function Refresh(props) {
 			api
 				.secret.me(props.keys.publicKeyId)
 				.then((secrets) => {
+					if (!Array.isArray(secrets)) {
+						props.setConnectionError();
+						return true;
+					}
 					console.log(`Retreived ${secrets?.length} secrets`);
 					props.setSecrets(secrets);
 				})
@@ -78,6 +86,10 @@ function Refresh(props) {
 			api
 				.folder.me()
 				.then((folders) => {
+					if (!Array.isArray(folders)) {
+						props.setConnectionError();
+						return true;
+					}
 					console.log(`Retreived ${folders?.length} folders`);
 					props.setFolders(folders);
 				})
@@ -89,6 +101,10 @@ function Refresh(props) {
 			api
 				.folder.recovery()
 				.then((folders) => {
+					if (!Array.isArray(folders)) {
+						props.setConnectionError();
+						return true;
+					}
 					console.log(`Retreived ${folders?.length} folders`);
 					props.setFolders(folders);
 				})
@@ -115,6 +131,10 @@ function Refresh(props) {
 		console.log('Retreiving organization users for the authenticated user.');
 		api.user.all()
 			.then((users) => {
+				if (!Array.isArray(users)) {
+					props.setConnectionError();
+					return true;
+				}
 				console.log(`Retreived ${users?.length} users`);
 				props.setUsers(users);
 			})
