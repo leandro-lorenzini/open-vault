@@ -35,6 +35,7 @@ function Refresh(props) {
 				props.setSecrets([]);
 				props.setOrganization({});
 				props.setLocalPassword({});
+				props.setAuthenticated(false);
 			} else {
 				props.setConnectionError(false);
 			}

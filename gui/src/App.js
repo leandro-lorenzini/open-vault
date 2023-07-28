@@ -271,6 +271,7 @@ function App() {
 			}
 			{ user && keys && !recovery && !dragSecret ? // we don't want to refresh data right after moving a folder.
 				<Refresh 
+					setAuthenticated={setAuthenticated}
 					setConnectionError={setConnectionError}
 					recovery={recovery}
 					user={user} 
@@ -285,6 +286,7 @@ function App() {
 
 			{ recovery && !dragSecret ?
 				<Refresh
+					setAuthenticated={setAuthenticated}
 					setConnectionError={setConnectionError}
 					recovery={recovery}
 					user={user} 
