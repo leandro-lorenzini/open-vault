@@ -6,9 +6,10 @@ This is a new project, and I only work on it during my free time, so I'm more th
 
 ## Installation process
 ### Preparing the client
-You can use the files generated during the previous release of this project or you can build the client on your local machine instead.
+#### Option 1 - Download build from repository
+You can download the build for macOs, Windows and Linux under the [releases page](../../releases) of this repository.
+#### Optiom 2 - Build the client
 The advantage of building it yourself is that you can set the default server address, so if you are deploying to multiple users, they won't have to manually set the server address.
-#### Building the client
 1. Clone the repository to your local machine.
 2. Building the client (Installer)
 ```bash
@@ -21,7 +22,7 @@ The building process only generates the installer for the current OS, so you mig
 
 ### Deploying the server
 1. Clone the repository to the server where you want to deploy the application.
-2. Copy the previously generated installer files to the sever's `assets` folder.
+2. Copy the [client installer files](../../releases) to the sever's `assets` folder, those files can be found under the release page of this repository. If you built the client by yourself, then youse the instead.
 3. Update the environment variables in the `docker-compose.yaml` file.
 4. Place the server SSL certificate as follows:
     - ./server/cert.pem
