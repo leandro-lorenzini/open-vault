@@ -440,7 +440,7 @@ Router.get('/sync/:recovery?', async (req, res) => {
 
               if (
                 accessible.length ||
-                folder.user.toString() === user._id.toString()
+                folder.user?.toString() === user._id.toString()
               ) {
                 for (let key of user.keys) {
                   if (!keys.includes(key._id.toString())) {
