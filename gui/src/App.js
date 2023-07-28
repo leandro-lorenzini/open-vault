@@ -169,6 +169,7 @@ function App() {
 						}} 
 						user={user} 
 					/>}/>
+					<Route path="*" element={<Navigate to='/signin'/>}/>
 				</Routes>
 			</div>
 		</ConfigProvider>;
