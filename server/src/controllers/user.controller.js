@@ -23,7 +23,7 @@ function create(organization, name, email, password, admin, groups, sso) {
           {
             value: crypto
               .createHash('sha256')
-              .update(Math.random().toString().substring(2))
+              .update(crypto.randomBytes(32).toString('hex'))
               .digest('hex'),
             type: 'activation',
           },
@@ -343,7 +343,7 @@ function add_token(organization, user, type) {
   return new Promise((resolve, reject) => {
     const token = crypto
       .createHash('sha256')
-      .update(Math.random().toString().substring(2))
+      .update(crypto.randomBytes(32).toString('hex'))
       .digest('hex');
     UserModel.findOneAndUpdate(
       { _id: user, organization },

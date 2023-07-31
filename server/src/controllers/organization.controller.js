@@ -249,7 +249,7 @@ function add_token(organization, type) {
   return new Promise((resolve, reject) => {
     const token = crypto
       .createHash('sha256')
-      .update(Math.random().toString().substring(2))
+      .update(crypto.randomBytes(32).toString('hex'))
       .digest('hex');
     OrganizationModel.findOneAndUpdate(
       { _id: organization },
