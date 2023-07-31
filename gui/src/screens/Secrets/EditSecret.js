@@ -23,7 +23,7 @@ export default function EditSecret(props) {
 		setPlaintext('');
 		setSecret(props.secret);
 
-		var key = props.keys.privateKey;
+		let key = props.keys.privateKey;
 		encryption
 			.decrypt(props.secret?.vault?.ciphertext,key)
 			.then((plainText) => {

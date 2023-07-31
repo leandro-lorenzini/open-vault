@@ -7,7 +7,7 @@ const userController = require('../controllers/user.controller');
 const organizationController = require('../controllers/organization.controller');
 
 function isAdmin(req, res, next) {
-  if (!req.session.user || !req.session.user.id) {
+  if (!req.session.user?.id) {
     return res.status(403).send('User not authenticated');
   }
 

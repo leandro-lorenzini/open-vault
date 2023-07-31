@@ -4,7 +4,7 @@
 const userController = require('../controllers/user.controller');
 
 function isAuthenticated(req, res, next) {
-  if (!req.session.user || !req.session.user.id) {
+  if (!req.session.user?.id) {
     return res.status(403).send();
   } else {
     userController

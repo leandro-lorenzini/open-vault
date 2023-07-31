@@ -177,9 +177,9 @@ Router.patch('/:secretId', (req, res) => {
               .then((folders) => {
                 if (
                   folders &&
-                  folders[0] &&
-                  folders[0].secrets &&
-                  folders[0].secrets[0].vaults?.length
+                  folders?.[0] &&
+                  folders?.[0].secrets &&
+                  folders?.[0].secrets[0].vaults?.length
                 ) {
                   vaultController
                     .remove(
@@ -363,8 +363,8 @@ Router.get('/key/:key', (req, res) => {
 // eslint-disable-next-line sonarjs/cognitive-complexity
 Router.get('/sync/:recovery?', async (req, res) => {
   try {
-    var missing = [];
-    var outdated = [];
+    let missing = [];
+    let outdated = [];
 
     if (req.params.recovery) {
       let users = await userController.all(req.organization);
@@ -415,8 +415,8 @@ Router.get('/sync/:recovery?', async (req, res) => {
       res.send({ missing, outdated });
     } else {
       // Get current user's group membership
-      var user = await userController.get(req.organization, req.user);
-      var groups = user.groups;
+      let user = await userController.get(req.organization, req.user);
+      let groups = user.groups;
 
       for (let group of groups) {
         let users = await userController.all(req.organization);

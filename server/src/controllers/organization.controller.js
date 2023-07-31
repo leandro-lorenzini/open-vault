@@ -292,7 +292,7 @@ function get_token(organization, token, type) {
       { 'tokens.$': 1 }
     )
       .then((doc) => {
-        if (doc && doc.tokens) {
+        if (doc?.tokens) {
           resolve(doc.tokens[0]);
         } else {
           resolve();

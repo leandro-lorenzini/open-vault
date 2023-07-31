@@ -23,7 +23,7 @@ async function sendEmail(org, to, subject, template, data) {
     });
 
     // Making sure that URL end in '/'
-    var APP_URL = process.env.URL;
+    let APP_URL = process.env.URL;
     if (APP_URL.slice(-1) !== '/') {
       APP_URL = APP_URL + '/';
     }

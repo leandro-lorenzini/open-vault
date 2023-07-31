@@ -205,7 +205,7 @@ function get(organization, folder, secret) {
 
     FolderModel.aggregate(pipeline)
       .then((docs) => {
-        resolve(docs && docs.length ? docs[0] : []);
+        resolve(docs?.length ? docs[0] : []);
       })
       .catch((error) => {
         reject(error);
@@ -354,7 +354,7 @@ function move(secret, source, destination) {
         { $replaceRoot: { newRoot: '$secrets' } },
       ]);
 
-      if (!document || !document.length) {
+      if (!document?.length) {
         return reject('Could not find secret');
       }
       document = document[0];

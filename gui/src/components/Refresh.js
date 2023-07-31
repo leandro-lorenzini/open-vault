@@ -27,7 +27,7 @@ function Refresh(props) {
 
 	const isAuthenticated = () => {
 		api.auth.isAuthenticated().then(user => {
-			if (!user || !user.id || !user.organization) {
+			if (!user?.id || !user?.organization) {
 				console.log('User no longer authenticated, clear memory.');
 				props.setUser(null);
 				props.setUsers([]);

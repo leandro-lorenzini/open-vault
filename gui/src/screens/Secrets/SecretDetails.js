@@ -26,7 +26,7 @@ export default function SecretDetails(props) {
 		setPlaintext('');
 		setSecret(props.secret);
 		setEdit(false);
-		var key = props.recovery ? props.recovery : props.keys.privateKey;
+		let key = props.recovery ? props.recovery : props.keys.privateKey;
 		encryption.decrypt(props.secret?.vault?.ciphertext, key)
 			.then((plainText) => {
 				setPlaintext(plainText);

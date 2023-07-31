@@ -16,11 +16,11 @@ function Sync(props) {
 			let user = props.users.filter(u => u.id === missing.user);
 			/* Check if current user/key has vault for the missing password 
                Also check if we know the other user's public key. */
-			if (secret && secret.length && user && user.length) {
+			if (secret?.length && user?.length) {
 				let key = user[0].keys.filter(k => k.id === missing.key);
 				if (secret[0].vault && secret[0].vault.ciphertext && key && key.length) {
 					// Decrypt password using current user's private Key
-					var currentUserKey = props.recovery ? props.recovery : props.keys.privateKey;
+					let currentUserKey = props.recovery ? props.recovery : props.keys.privateKey;
 					encryption.decrypt(secret[0].vault.ciphertext, currentUserKey).then(plaintext => {
 						// Encrypt password with other user's public key.
 						encryption.encrypt(plaintext, key[0].value).then(ciphertext => {
@@ -45,12 +45,11 @@ function Sync(props) {
 			/* Check if current user/key has vault for the outdated password
              And Check if user's version is higher than the outdated ine
              Also check if we know the other user's public key. */
-			if (secret && secret.length && secret[0].vault.version > outdated.version && user && user.length) {
+			if (secret?.length && secret[0].vault.version > outdated.version && user?.length) {
 				let key = user[0].keys.filter(k => k.id === outdated.key);
 				if (secret[0].vault && secret[0].vault.ciphertext && key && key.length) {
 					// Decrypt password using current user's private Key
-					//var currentUserKey = await props.keys.privateKey;
-					var currentUserKey = props.recovery ? props.recovery : props.keys.privateKey;
+					let currentUserKey = props.recovery ? props.recovery : props.keys.privateKey;
 					encryption.decrypt(secret[0].vault.ciphertext, currentUserKey).then(plaintext => {
 						// Encrypt password with other user's public key.
 						encryption.encrypt(plaintext, key[0].value).then(ciphertext => {

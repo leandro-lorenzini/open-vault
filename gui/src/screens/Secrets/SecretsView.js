@@ -74,8 +74,7 @@ export default function SecretsView(props) {
 					padding: 20, 
 					backgroundColor: props.darkMode ? 'rgb(34,34,34)':'rgb(235, 235, 235)'
 				}}>
-				{props.selectedSecret && 
-					(props.selectedSecret?.vault?.ciphertext) ?
+				{(props.selectedSecret?.vault?.ciphertext) ?
 					<SecretDetails 
 						openNotification={openNotification}
 						recovery={props.recovery}

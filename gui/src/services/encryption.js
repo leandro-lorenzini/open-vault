@@ -24,7 +24,7 @@ async function toUnit8Array(key, type) {
 			return bytes.buffer;
 		};
 
-		var keyBuffer = await fetchArrayBuffer(key);
+		let keyBuffer = await fetchArrayBuffer(key);
 		return await window.crypto.subtle.importKey(
 			type === 'public' ? 'spki' : 'pkcs8',
 			keyBuffer,
@@ -133,7 +133,7 @@ function generateKeys(userId, password) {
 				// Store keys created for user
 				api.key.add(publicKeyBase64).then(async result => {
 					let storedKeys = await window.electron.ipcRenderer.invoke('read-file', fileName);
-					storedKeys = storedKeys && storedKeys.length ? JSON.parse(storedKeys) : {};
+					storedKeys = storedKeys?.length ? JSON.parse(storedKeys) : {};
 					storedKeys[userId] = {};
 					storedKeys[userId].publicKey = publicKeyBase64;
 					storedKeys[userId].privateKey = encryptStringWithPassword(privateKeyBase64, password);
@@ -160,7 +160,7 @@ function deleteKey(userId) {
 		try {
 			(async () => {
 				let storedKeys = await window.electron.ipcRenderer.invoke('read-file', fileName);
-				storedKeys = storedKeys && storedKeys.length ? JSON.parse(storedKeys) : {};
+				storedKeys = storedKeys?.length ? JSON.parse(storedKeys) : {};
 				if (storedKeys[userId]) {
 					delete storedKeys[userId];
 				}
@@ -178,7 +178,7 @@ function updateLocalPassword(userId, password, newPassword) {
 		try {
 			(async () => {
 				let storedKeys = await window.electron.ipcRenderer.invoke('read-file', fileName);
-				storedKeys = storedKeys && storedKeys.length ? JSON.parse(storedKeys) : {};
+				storedKeys = storedKeys?.length ? JSON.parse(storedKeys) : {};
 
 				if (storedKeys[userId]) {
 					let privateKeyBase64 = decryptStringWithPassword(storedKeys[userId].privateKey, password);

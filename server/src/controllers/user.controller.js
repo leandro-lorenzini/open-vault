@@ -83,7 +83,7 @@ function create(organization, name, email, password, admin, groups, sso) {
  */
 function update(organization, user, name, email, groups, active, sso) {
   return new Promise((resolve, reject) => {
-    var data = {
+    let data = {
       name,
       email,
       groups,
