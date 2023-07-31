@@ -132,7 +132,7 @@ export default function UsersView(props) {
 					}}
 				/> : <></>}
 
-			<Table columns={columns} dataSource={users ? users : []} rowSelection={{
+			<Table columns={columns} dataSource={users || []} rowSelection={{
 				selectedRowKeys,
 				onChange: onSelectChange,
 			}} rowKey={'id'} />

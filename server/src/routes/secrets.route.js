@@ -176,7 +176,6 @@ Router.patch('/:secretId', (req, res) => {
               .inaccessible(req.organization, value.folderId, value.secretId)
               .then((folders) => {
                 if (
-                  folders &&
                   folders?.[0] &&
                   folders?.[0].secrets &&
                   folders?.[0].secrets[0].vaults?.length

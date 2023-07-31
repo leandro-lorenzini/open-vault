@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import api from '../../services/api';
 import { LockOutlined, UserOutlined, ApiOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Tooltip, Typography, notification } from 'antd';
 import Api from '../../services/api';
@@ -14,7 +13,7 @@ export default function LoginView(props) {
 	function login(form) {
 		setLoading(true);
 		console.log(`User ${form.email} attemping to authenticate.`);
-		api.auth.authenticate(form.email, form.password).then(async user => {
+		Api.auth.authenticate(form.email, form.password).then(async user => {
 			console.log(`User ${form.email} successfuly authenticated.`);
 			props.setUser(user);
 		}).catch(error => {

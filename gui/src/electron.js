@@ -21,8 +21,8 @@ function createWindow() {
 	win = new BrowserWindow({
 		width: 1200,
 		height: 700,
-		frame: process.platform !== 'darwin' ? true : false,
-		transparent: process.platform !== 'darwin' ? false : true,
+		frame: process.platform !== 'darwin',
+		transparent: process.platform == 'darwin',
 		webPreferences: {
 			nodeIntegration: false,
 			contextIsolation: true,

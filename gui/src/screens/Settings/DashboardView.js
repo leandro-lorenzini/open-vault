@@ -109,7 +109,7 @@ export default function DashboardView() {
 			key: 'Owner',
 			render: (_, { userEmail }) => (
 				<>
-					{ userEmail ? userEmail : 'Organization' }
+					{ userEmail || 'Organization' }
 				</>
 			),
 		},
@@ -148,7 +148,7 @@ export default function DashboardView() {
 			key: 'Owner',
 			render: (_, { userEmail }) => (
 				<>
-					{ userEmail ? userEmail : 'Organization' }
+					{ userEmail || 'Organization' }
 				</>
 			),
 		},
@@ -203,21 +203,21 @@ export default function DashboardView() {
 				{<Typography.Title level={3}>Need to Know rule violation</Typography.Title>}
 				<Table 
 					columns={columnsInacessible} 
-					dataSource={inaccessible ? inaccessible : []} 
+					dataSource={inaccessible || []} 
 					rowKey={'id'}
 				/>
 				
 				{<Typography.Title level={3}>Weak passwords</Typography.Title>}
 				<Table 
 					columns={columnsWeak} 
-					dataSource={weak ? weak : []} 
+					dataSource={weak || []} 
 					rowKey={'id'}
 				/>
 
 				{<Typography.Title level={3}>Old passwords</Typography.Title>}
 				<Table 
 					columns={columnsOld} 
-					dataSource={old ? old : []} 
+					dataSource={old || []} 
 					rowKey={'id'}
 				/>
 			</Col>

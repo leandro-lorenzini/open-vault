@@ -139,7 +139,7 @@ export default function FoldersView(props) {
 				<Table rowSelection={{
 					selectedRowKeys,
 					onChange: onSelectChange,
-				}} columns={columns} rowKey={'id'} dataSource={folders ? folders:[]}/>
+				}} columns={columns} rowKey={'id'} dataSource={folders || []}/>
 			</div>
 		</Col>
 	</Row>;

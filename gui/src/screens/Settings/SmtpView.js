@@ -67,7 +67,7 @@ export default function SmtpView() {
 					<Form.Item
 						name='secure'
 						required
-						initialValue={organization.smtp?.secure ? true : false}
+						initialValue={organization.smtp?.secure}
 						label='Secure'>
 						<Select options={[
 							{ value: true, label: 'Enabled' },

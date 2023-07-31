@@ -57,7 +57,7 @@ export default function AuthenticationView() {
 				<Form layout='vertical'>
 					<Typography.Title level={5}>Authentication configuration</Typography.Title>
 					<Form.Item name='sso' label="Authenitcation method" style={{ marginBottom: 10 }}>
-						<Select defaultValue={organization.sso?.enabled ? true : false}
+						<Select defaultValue={organization.sso?.enabled}
 							options={[
 								{ value: false, label: 'Local authentication'},
 								{ value: true, label: 'SSO authentication'}

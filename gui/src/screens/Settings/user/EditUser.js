@@ -108,7 +108,7 @@ export default function EditUser(props) {
 								{props.groups?.map(group => <Select.Option key={group.id} value={group.id}>{group.name}</Select.Option>)}
 							</Select>
 						</Form.Item>
-						<Form.Item label="User state" name="active" rules={[{ required: true }]} initialValue={props.user.active ? true : false}>
+						<Form.Item label="User state" name="active" rules={[{ required: true }]} initialValue={props.user.active}>
 							<Select placeholder="Please select the access rights">
 								<Select.Option key={true} value={true}>Active</Select.Option>
 								<Select.Option key={false} value={false}>Inactive</Select.Option>

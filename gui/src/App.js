@@ -61,14 +61,14 @@ function App() {
 		try {
 			window.electron.ipcRenderer.invoke('theme').then(value => {
 				if (!darkModePrefence || darkModePrefence === 'auto') {
-					setDarkMode(value === 'dark' ? true:false);
+					setDarkMode(value === 'dark');
 					console.log('Requested theme information from electron: ' + value);
 				}
 			});
 			window.electron.ipcRenderer.on('theme-update', (event, data) => {
 				if (!darkModePrefence || darkModePrefence === 'auto') {
 					console.log('Theme changed from electron: ' + data);
-					setDarkMode(data === 'dark' ? true:false);
+					setDarkMode(data === 'dark');
 				}
 			});
 			if (darkModePrefence === 'enabled') {

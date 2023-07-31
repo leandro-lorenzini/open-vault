@@ -130,7 +130,7 @@ export default function GroupsView() {
 				<Table rowSelection={{
 					selectedRowKeys,
 					onChange: onSelectChange,
-				}} columns={columns} rowKey={'id'} dataSource={groups ? groups:[]}/>
+				}} columns={columns} rowKey={'id'} dataSource={groups || []}/>
 			</div>
 		</Col>
 	</Row>;

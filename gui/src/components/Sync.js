@@ -18,7 +18,7 @@ function Sync(props) {
                Also check if we know the other user's public key. */
 			if (secret?.length && user?.length) {
 				let key = user[0].keys.filter(k => k.id === missing.key);
-				if (secret[0].vault && secret[0].vault.ciphertext && key && key.length) {
+				if (secret[0]?.vault.ciphertext && key?.length) {
 					// Decrypt password using current user's private Key
 					let currentUserKey = props.recovery ? props.recovery : props.keys.privateKey;
 					encryption.decrypt(secret[0].vault.ciphertext, currentUserKey).then(plaintext => {
@@ -47,7 +47,7 @@ function Sync(props) {
              Also check if we know the other user's public key. */
 			if (secret?.length && secret[0].vault.version > outdated.version && user?.length) {
 				let key = user[0].keys.filter(k => k.id === outdated.key);
-				if (secret[0].vault && secret[0].vault.ciphertext && key && key.length) {
+				if (secret[0]?.vault.ciphertext && key?.length) {
 					// Decrypt password using current user's private Key
 					let currentUserKey = props.recovery ? props.recovery : props.keys.privateKey;
 					encryption.decrypt(secret[0].vault.ciphertext, currentUserKey).then(plaintext => {

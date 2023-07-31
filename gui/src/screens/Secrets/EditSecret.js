@@ -53,7 +53,7 @@ export default function EditSecret(props) {
 							recovery,
 							secret.version + 1,
 							passwordStrength(form.password),
-							plaintext !== form.password ? true : false
+							plaintext !== form.password
 						)
 						.then((secret) => {
 							let data = secret;
