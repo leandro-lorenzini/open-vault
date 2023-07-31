@@ -283,7 +283,7 @@ function get_token(organization, token, type) {
         _id: organization,
         tokens: {
           $elemMatch: {
-            value: token,
+            value: token.toString(),
             type: type,
             date: { $gte: oneMinuteAgo },
           },
