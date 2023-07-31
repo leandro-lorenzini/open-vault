@@ -64,11 +64,18 @@ app.use(
 app.use('/user', isAuthenticated, require('./src/routes/user.route'));
 app.use('/profile', isAuthenticated, require('./src/routes/profile.route'));
 app.use('/folder', isAuthenticated, require('./src/routes/folder.route'));
+
+app.use('/', (req, res) => {
+  res.redirect('/download');
+});
+
+// Handle errors non previously handled by their respective routes.
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).render('error_500');
 });
 
+// Connect to the database
 mongoose
   .connect(process.env.DATABASE_URL)
   .then(() => {
@@ -85,9 +92,7 @@ mongoose
     });
   })
   .catch((error) => {
-    if (error) {
-      console.log(error);
-      process.exit(-1);
-    }
     console.error('Database connection error');
+    console.log(error);
+    process.exit(-1);
   });
