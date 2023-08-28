@@ -7,7 +7,7 @@ Open-vault is password manager designed for small and medium organizations with 
 ### Preparing the client
 #### Option 1 - Download build from repository
 You can download the build for macOs, Windows and Linux under the [releases page](../../releases) of this repository.
-#### Optiom 2 - Build the client
+#### Option 2 - Build the client
 The advantage of building it yourself is that you can set the default server address, so if you are deploying to multiple users, they won't have to manually set the server address.
 1. Clone the repository to your local machine.
 2. Building the client (Installer)
