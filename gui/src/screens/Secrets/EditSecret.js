@@ -6,6 +6,7 @@ import { Button, Drawer, Form, Input, Space, notification } from 'antd';
 
 export default function EditSecret(props) {
 	const [plaintext, setPlaintext] = useState('');
+	const [totp, setTotp] = useState('');
 	const [secret, setSecret] = useState(props.secret);
 	const [open, setOpen] = useState(true);
 
@@ -25,9 +26,10 @@ export default function EditSecret(props) {
 
 		let key = props.keys.privateKey;
 		encryption
-			.decrypt(props.secret?.vault?.ciphertext,key)
+			.decrypt([props.secret?.vault?.ciphertext, props.secret?.vault?.totp],key)
 			.then((plainText) => {
-				setPlaintext(plainText);
+				setPlaintext(plainText[0]);
+				setTotp(plainText[1]);
 			})
 			.catch((error) => {
 				console.error(error);
@@ -37,9 +39,9 @@ export default function EditSecret(props) {
 	const save = async (form) => {
 		console.log(`Updating secret with id ${props.secret.id}.`);
 		let key = props.keys.publicKey; // Get current user's publicKey
-		encryption.encrypt(form.password, key).then((ciphertext) => {
+		encryption.encrypt([form.password, form.totp], key).then((ciphertext) => {
 			encryption
-				.encrypt(form.password, props.organization.key)
+				.encrypt([form.password, form.totp], props.organization.key)
 				.then(async (recovery) => {
 					Api.secret
 						.update(
@@ -49,11 +51,13 @@ export default function EditSecret(props) {
 							props.secret.folder,
 							props.secret.id,
 							props.keys.publicKeyId,
-							ciphertext,
-							recovery,
+							ciphertext[0],
+							recovery[0],
+							ciphertext[1],
+							recovery[1],
 							secret.version + 1,
 							passwordStrength(form.password),
-							plaintext !== form.password
+							(plaintext !== form.password || totp !== form.totp)
 						)
 						.then((secret) => {
 							let data = secret;
@@ -138,6 +142,15 @@ export default function EditSecret(props) {
 				>
 					<Input.Password maxLength={190} value={plaintext} />
 				</Form.Item>
+
+				<Form.Item
+					label="TOTP Secret code"
+					name="totp"
+					initialValue={totp}
+				>
+					<Input value={totp} />
+				</Form.Item>
+
 			</Drawer>
 		</Form>
 	);

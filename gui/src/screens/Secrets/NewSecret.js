@@ -17,10 +17,10 @@ export default function New(props) {
 
 	const save = async (form) => {
 		console.log('Creating a new secret.');
-		encryption.encrypt(form.password, props.keys.publicKey).then((ciphertext) => {
+		encryption.encrypt([form.password, form.totp], props.keys.publicKey).then((encrypted) => {
 			console.log('Secret has been encrypted with user\'s public Key.');
 			encryption
-				.encrypt(form.password, props.organization.key)
+				.encrypt([form.password, form.totp], props.organization.key)
 				.then(async(recovery) => {
 					console.log('Secret has been encrypted with organization\'s public Key.');
 					api.secret
@@ -30,8 +30,10 @@ export default function New(props) {
 							form.username,
 							form.folder,
 							props.keys.publicKeyId,
-							ciphertext,
-							recovery,
+							encrypted[0],
+							recovery[0],
+							encrypted[1],
+							recovery[1],
 							passwordStrength(form.password)
 						)
 						.then((secret) => {
@@ -97,6 +99,12 @@ export default function New(props) {
 					rules={[{ required: true }]}
 				>
 					<Input.Password />
+				</Form.Item>
+				<Form.Item
+					label="TOTP secret code"
+					name="totp"
+				>
+					<Input />
 				</Form.Item>
 				<Form.Item label="Folder" name="folder" rules={[{ required: true }]}>
 					<Select placeholder="Please select a folder">

@@ -12,8 +12,9 @@ const mongoose = require('mongoose');
  * @param {String} user User's ID
  * @param {String} key User's public key ID used by the current device
  * @param {String} ciphertext Value encrypted by the client using user's public key
- * @param {String} recovery Value encrypted by the client using organization public key
  * @param {Number} strength
+ * @param {String} totp TOTP encrypted by the client using organization public key
+ * @param {String} totpRecovery TOTP encrypted by the client using organization public key
  * @returns {Promise}
  */
 function add(
@@ -26,7 +27,9 @@ function add(
   key,
   ciphertext,
   recovery,
-  strength
+  strength,
+  totp,
+  totpRecovery
 ) {
   return new Promise((resolve, reject) => {
     let secret = {
@@ -42,6 +45,7 @@ function add(
           _id: new mongoose.Types.ObjectId(),
           organizationOwned: true,
           ciphertext: recovery,
+          totp: totpRecovery,
           version: 0,
         },
         {
@@ -49,6 +53,7 @@ function add(
           user,
           key,
           ciphertext,
+          totp,
           version: 0,
         },
       ],
@@ -85,6 +90,8 @@ function add(
  * @param {String} version
  * @param {String} recovery
  * @param {Number} strength
+ * @param {String} totp
+ * @param {String} totpRecovery
  * @returns {Promise}
  */
 function update(
@@ -100,6 +107,8 @@ function update(
   version,
   recovery,
   strength,
+  totp,
+  totprecovery,
   updatedVault
 ) {
   return new Promise((resolve, reject) => {
@@ -113,9 +122,11 @@ function update(
         'secrets.$[s].username': username,
         'secrets.$[s].strength': strength,
         'secrets.$[s].vaults.$[v].ciphertext': ciphertext,
+        'secrets.$[s].vaults.$[v].totp': totp,
         'secrets.$[s].vaults.$[v].version': version,
         'secrets.$[s].vaults.$[v].lastUpdated': Date.now(),
         // Organization vault
+        'secrets.$[s].vaults.$[o].totp': totprecovery,
         'secrets.$[s].vaults.$[o].ciphertext': recovery,
         'secrets.$[s].vaults.$[o].version': version,
       },

@@ -39,6 +39,8 @@ Router.post('/', (req, res) => {
     ciphertext: Joi.string().required(),
     recovery: Joi.string().required(),
     strength: Joi.number().required(),
+    totp: Joi.string().allow(''),
+    totpRecovery: Joi.string().allow(''),
   }).validate({ ...req.body, ...req.params });
 
   if (error) {
@@ -56,7 +58,9 @@ Router.post('/', (req, res) => {
       value.key,
       value.ciphertext,
       value.recovery,
-      value.strength
+      value.strength,
+      value.totp,
+      value.totpRecovery
     )
     .then((secret) => {
       delete secret._id;
@@ -65,6 +69,7 @@ Router.post('/', (req, res) => {
           id: vault._id,
           organizationOwned: vault.organizationOwned,
           ciphertext: vault.ciphertext,
+          totp: vault.totp,
           version: vault.version,
         };
       });
@@ -83,6 +88,7 @@ Router.post('/', (req, res) => {
               user: vault.user,
               key: vault.key,
               ciphertext: vault.ciphertext,
+              totp: vault.totp,
               version: vault.version,
             };
           })[0],
@@ -126,6 +132,8 @@ Router.patch('/:secretId', (req, res) => {
     version: Joi.number().required(),
     strength: Joi.number().required(),
     updatedVault: Joi.boolean(),
+    totp: Joi.string().allow(''),
+    totpRecovery: Joi.string().allow(''),
   }).validate({ ...req.body, ...req.params });
 
   if (error) {
@@ -152,6 +160,8 @@ Router.patch('/:secretId', (req, res) => {
             value.version,
             value.recovery,
             value.strength,
+            value.totp,
+            value.totpRecovery,
             value.updatedVault
           )
           .then(() => {
@@ -168,6 +178,7 @@ Router.patch('/:secretId', (req, res) => {
                 user: req.user,
                 key: value.key,
                 ciphertext: value.ciphertext,
+                totp: value.totp,
                 version: value.version,
               },
             });
@@ -214,6 +225,8 @@ Router.post('/:secretId/vault', (req, res) => {
     user: Joi.string().custom(validateObjectId),
     key: Joi.string().custom(validateObjectId),
     ciphertext: Joi.string().required(),
+    totp: Joi.string().allow(''),
+    totpRecovery: Joi.string().allow(''),
     version: Joi.number().required(),
   }).validate({ ...req.body, ...req.params });
 
@@ -235,6 +248,8 @@ Router.post('/:secretId/vault', (req, res) => {
             value.user,
             value.key,
             value.ciphertext,
+            value.totp,
+            value.totpRecovery,
             value.version
           )
           .then((vault) => {
@@ -244,6 +259,7 @@ Router.post('/:secretId/vault', (req, res) => {
               folder: value.folderId,
               key: vault.key,
               ciphertext: vault.ciphertext,
+              totp: vault.totp,
               version: vault.version,
             });
           })
@@ -265,6 +281,8 @@ Router.patch('/:secretId/vault', (req, res) => {
     user: Joi.string().custom(validateObjectId).required(),
     key: Joi.string().custom(validateObjectId).required(),
     ciphertext: Joi.string().required().required(),
+    totp: Joi.string().allow(''),
+    totpRecovery: Joi.string().allow(''),
     version: Joi.number().required().required(),
   }).validate({ ...req.body, ...req.params });
 
@@ -286,6 +304,8 @@ Router.patch('/:secretId/vault', (req, res) => {
             value.user,
             value.key,
             value.ciphertext,
+            value.totp,
+            value.totpRecovery,
             value.version
           )
           .then(() => {
@@ -295,6 +315,7 @@ Router.patch('/:secretId/vault', (req, res) => {
               user: value.user,
               key: value.key,
               value: value.ciphertext,
+              totp: value.totp,
               version: value.version,
             });
           })
@@ -344,6 +365,7 @@ Router.get('/key/:key', (req, res) => {
                   key: vault.key,
                   user: vault.user,
                   ciphertext: vault.ciphertext,
+                  totp: vault.totp,
                   version: vault.version,
                 };
               }
@@ -514,6 +536,7 @@ Router.get('/user/:userId', (req, res) => {
                         user: vault.user,
                         key: vault.key,
                         ciphertext: vault.ciphertext,
+                        totp: vault.totp,
                         version: vault.version,
                       };
                     }),
@@ -561,6 +584,7 @@ Router.get('/user/', (req, res) => {
                         user: vault.user,
                         key: vault.key,
                         ciphertext: vault.ciphertext,
+                        totp: vault.totp,
                         version: vault.version,
                       };
                     }),
@@ -626,6 +650,7 @@ Router.get('/recovery', (req, res) => {
                 item.vault = {
                   id: vault._id,
                   ciphertext: vault.ciphertext,
+                  totp: vault.totp,
                   version: vault.version,
                 };
               }

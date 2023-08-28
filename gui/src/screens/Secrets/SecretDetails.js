@@ -10,6 +10,7 @@ import EditSecret from './EditSecret';
 export default function SecretDetails(props) {
 	const [edit, setEdit] = useState(false);
 	const [plaintext, setPlaintext] = useState('');
+	const [totp, setTotp] = useState('');
 	const [secret, setSecret] = useState();
 	const [visible, setVisible] = useState(false);
 
@@ -27,9 +28,10 @@ export default function SecretDetails(props) {
 		setSecret(props.secret);
 		setEdit(false);
 		let key = props.recovery ? props.recovery : props.keys.privateKey;
-		encryption.decrypt(props.secret?.vault?.ciphertext, key)
+		encryption.decrypt([props.secret?.vault?.ciphertext, props.secret?.vault?.totp], key)
 			.then((plainText) => {
-				setPlaintext(plainText);
+				setPlaintext(plainText[0]);
+				setTotp(plainText[1]);
 			})
 			.catch((error) => {
 				console.error(error);
@@ -157,6 +159,25 @@ export default function SecretDetails(props) {
 							</>
 							} style={{ borderStyle: 'dashed'}} />
 						</Form.Item>
+
+						<Form.Item label="TOTP" name="totp" rules={[{ required: true }]} initialValue={totp}>
+							<Input readOnly={!edit} maxLength={190} type={visible ? 'text' : 'password'} value={totp} suffix={<>
+								<Tooltip title="Copy to clipboard">
+									<CopyOutlined
+										onClick={() => copy(totp)}
+									/>
+								</Tooltip>
+								<Tooltip title="Show/hide TOTP">
+									{visible ?
+										<EyeInvisibleOutlined style={{ cursor: 'pointer' }} onClick={() => setVisible(false)} /> :
+										<EyeOutlined style={{ cursor: 'pointer' }} onClick={() => setVisible(true)} />
+									}
+
+								</Tooltip>
+							</>
+							} style={{ borderStyle: 'dashed'}} />
+						</Form.Item>
+
 					</Form>
 				</>
 			},
