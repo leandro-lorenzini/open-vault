@@ -27,12 +27,6 @@ export default function SecretDetails(props) {
 	};
 
 	useEffect(() => {
-		setInterval(() => {
-			setTotp(new OTP(totpSecret).getToken());
-		}, 30000);
-	}, []);
-
-	useEffect(() => {
 		setPlaintext('');
 		setSecret(props.secret);
 		setEdit(false);
@@ -43,8 +37,12 @@ export default function SecretDetails(props) {
 				setTotpSecret(plainText[1]);
 				let otpObj = new OTP(plainText[1]);
 				setTotp(otpObj.getToken());
+
 				setTimeout(() => {
 					setTotp(otpObj.getToken());
+					setInterval(() => {
+						setTotp(otpObj.getToken());
+					}, 2000);
 				}, otpObj.getTimeUntilNextTick()*1000);
 			})
 			.catch((error) => {
@@ -74,7 +72,7 @@ export default function SecretDetails(props) {
 	};
 
 	if (!plaintext) {
-		return <>Loading</>;
+		return <></>;
 	}
 
 	return (<>
@@ -156,11 +154,11 @@ export default function SecretDetails(props) {
 								/>
 							</Tooltip>} style={{ borderStyle: 'dashed' }} />
 						</Form.Item>
-						<Form.Item label="Password" name="password" rules={[{ required: true }]} initialValue={plaintext}>
+						<Form.Item label="Password" name="password" initialValue={plaintext}>
 							<Input readOnly={!edit} maxLength={190} type={visible ? 'text' : 'password'} value={plaintext} suffix={<>
 								<Tooltip title="Copy to clipboard">
 									<CopyOutlined
-										onClick={() => copy(plaintext)}
+										onClick={() => copy(plaintext)} 
 									/>
 								</Tooltip>
 								<Tooltip title="Show/hide password">
@@ -178,7 +176,10 @@ export default function SecretDetails(props) {
 							<Input readOnly={true} maxLength={190} value={totp} suffix={<>
 								<Tooltip title="Copy to clipboard">
 									<CopyOutlined
-										onClick={() => copy(totp)}
+										onClick={() => {
+											let code = new OTP(totpSecret).getToken();
+											copy(code);
+										}}
 									/>
 								</Tooltip>
 							</>
