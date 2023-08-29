@@ -53,10 +53,10 @@ export default function EditSecret(props) {
 							props.keys.publicKeyId,
 							ciphertext[0],
 							recovery[0],
+							passwordStrength(form.password),
 							ciphertext[1],
 							recovery[1],
 							secret.version + 1,
-							passwordStrength(form.password),
 							(plaintext !== form.password || totp !== form.totp)
 						)
 						.then((secret) => {

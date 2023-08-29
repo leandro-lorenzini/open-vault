@@ -388,7 +388,7 @@ function add_secret(name, address, username, folder, key, ciphertext, recovery, 
 	});
 }
 
-function update_secret(name, address, username, folder, secret, key, ciphertext, recovery, version, strength, totp, totpRecovery, updatedVault) {
+function update_secret(name, address, username, folder, secret, key, ciphertext, recovery, strength, totp, totpRecovery, version, updatedVault) {
 	return new Promise((resolve, reject) => {
 		axios
 			.patch(
