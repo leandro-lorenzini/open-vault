@@ -21,11 +21,11 @@ function Sync(props) {
 				if (secret[0]?.vault.ciphertext && key?.length) {
 					// Decrypt password using current user's private Key
 					let currentUserKey = props.recovery ? props.recovery : props.keys.privateKey;
-					encryption.decrypt(secret[0].vault.ciphertext, currentUserKey).then(plaintext => {
+					encryption.decrypt([secret[0].vault.ciphertext, secret[0].vault.totp], currentUserKey).then(plaintext => {
 						// Encrypt password with other user's public key.
-						encryption.encrypt(plaintext, key[0].value).then(ciphertext => {
+						encryption.encrypt([plaintext[0], plaintext[1]], key[0].value).then(ciphertext => {
 							// Create a vault for the other user's public key                    
-							Api.vault.add(secret[0].folder, secret[0].id, missing.user, missing.key, ciphertext, secret[0].version).catch(error => {
+							Api.vault.add(secret[0].folder, secret[0].id, missing.user, missing.key, ciphertext[0], ciphertext[1], secret[0].version).catch(error => {
 								console.error(error);
 							});
                     
@@ -50,11 +50,11 @@ function Sync(props) {
 				if (secret[0]?.vault.ciphertext && key?.length) {
 					// Decrypt password using current user's private Key
 					let currentUserKey = props.recovery ? props.recovery : props.keys.privateKey;
-					encryption.decrypt(secret[0].vault.ciphertext, currentUserKey).then(plaintext => {
+					encryption.decrypt([secret[0].vault.ciphertext, secret[0].vault.totp], currentUserKey).then(plaintext => {
 						// Encrypt password with other user's public key.
-						encryption.encrypt(plaintext, key[0].value).then(ciphertext => {
+						encryption.encrypt([plaintext[0], plaintext[1]], key[0].value).then(ciphertext => {
 							// Create a vault for the other user's public key
-							Api.vault.update(secret[0].folder, secret[0].id, outdated.user, outdated.key, ciphertext, secret[0].version).catch(error => {
+							Api.vault.update(secret[0].folder, secret[0].id, outdated.user, outdated.key, ciphertext[0], ciphertext[1], secret[0].version).catch(error => {
 								console.error(error);
 							});
                   

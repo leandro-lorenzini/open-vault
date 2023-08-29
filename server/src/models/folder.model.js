@@ -6,6 +6,7 @@ const vault = new mongoose.Schema({
   user: { type: ObjectId },
   key: { type: ObjectId, required: true },
   ciphertext: { type: String, required: true },
+  totp: { type: String },
   version: { type: Number, required: true, default: 0 },
 });
 

@@ -361,7 +361,7 @@ function old_secrets() {
 	});
 }
 
-function add_secret(name, address, username, folder, key, ciphertext, recovery, strength) {
+function add_secret(name, address, username, folder, key, ciphertext, recovery, totp, totpRecovery, strength) {
 	return new Promise((resolve, reject) => {
 		axios
 			.post(
@@ -373,7 +373,9 @@ function add_secret(name, address, username, folder, key, ciphertext, recovery, 
 					key,
 					ciphertext,
 					recovery,
-					strength
+					strength,
+					totp,
+					totpRecovery
 				},
 				{ withCredentials: true }
 			)
@@ -386,7 +388,7 @@ function add_secret(name, address, username, folder, key, ciphertext, recovery, 
 	});
 }
 
-function update_secret(name, address, username, folder, secret, key, ciphertext, recovery, version, strength, updatedVault) {
+function update_secret(name, address, username, folder, secret, key, ciphertext, recovery, strength, totp, totpRecovery, version, updatedVault) {
 	return new Promise((resolve, reject) => {
 		axios
 			.patch(
@@ -400,6 +402,8 @@ function update_secret(name, address, username, folder, secret, key, ciphertext,
 					recovery,
 					version,
 					strength,
+					totp,
+					totpRecovery,
 					updatedVault
 				},
 				{ withCredentials: true }
@@ -426,7 +430,7 @@ function delete_secret(folder, secret) {
 	});
 }
 
-function add_vault(folder, secret, user, key, ciphertext, version) {
+function add_vault(folder, secret, user, key, ciphertext, totp, version) {
 	return new Promise((resolve, reject) => {
 		axios
 			.post(
@@ -435,6 +439,7 @@ function add_vault(folder, secret, user, key, ciphertext, version) {
 					user,
 					key,
 					ciphertext,
+					totp,
 					version
 				},
 				{ withCredentials: true }
@@ -448,7 +453,7 @@ function add_vault(folder, secret, user, key, ciphertext, version) {
 	});
 }
 
-function update_vault(folder, secret, user, key, ciphertext, version) {
+function update_vault(folder, secret, user, key, ciphertext, totp, version) {
 	return new Promise((resolve, reject) => {
 		axios
 			.patch(
@@ -457,6 +462,7 @@ function update_vault(folder, secret, user, key, ciphertext, version) {
 					user,
 					key,
 					ciphertext,
+					totp,
 					version
 				},
 				{ withCredentials: true }

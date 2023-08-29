@@ -48,21 +48,26 @@ async function toUnit8Array(key, type) {
  */
 async function encrypt(plainText, key) {
 	try {
-		console.log('Encrypting string with the provided key.');
-		const encoder = new TextEncoder();
-		const data = encoder.encode(plainText);
+		plainText = Array.isArray(plainText) ? plainText : [plainText];
+		let encrypted = [];
+		for (let item of plainText) {
+			console.log('Encrypting string with the provided key.');
+			const encoder = new TextEncoder();
+			const data = encoder.encode(item);
 
-		const encryptedData = await window.crypto.subtle.encrypt(
-			{
-				name: 'RSA-OAEP',
-			},
-			await toUnit8Array(key, 'public'),
-			data
-		);
+			const encryptedData = await window.crypto.subtle.encrypt(
+				{
+					name: 'RSA-OAEP',
+				},
+				await toUnit8Array(key, 'public'),
+				data
+			);
 
-		return window.btoa(
-			String.fromCharCode.apply(null, new Uint8Array(encryptedData))
-		);
+			encrypted.push(window.btoa(
+				String.fromCharCode.apply(null, new Uint8Array(encryptedData))
+			));
+		}
+		return encrypted;
 	} catch (error) {
 		console.error('Failed to encrypt string with the provided key.');
 		console.error(error);
@@ -76,27 +81,33 @@ async function encrypt(plainText, key) {
  * @returns {String}
  */
 async function decrypt(ciphertext, key) {
+	let decrypted = [];
+	ciphertext = Array.isArray(ciphertext) ? ciphertext : [ciphertext];
 	try {
-		console.log('Decrypting string with the provided key.');
-		// Convert base64 string back to ArrayBuffer
-		const binaryString = window.atob(ciphertext);
-		const len = binaryString.length;
-		const bytes = new Uint8Array(len);
-		for (let i = 0; i < len; i++) {
-			bytes[i] = binaryString.charCodeAt(i);
-		}
-		const encryptedData = bytes.buffer;
+		for (let item of ciphertext) {
+			console.log(item);
+			console.log('Decrypting string with the provided key.');
+			// Convert base64 string back to ArrayBuffer
+			const binaryString = window.atob(item);
+			const len = binaryString.length;
+			const bytes = new Uint8Array(len);
+			for (let i = 0; i < len; i++) {
+				bytes[i] = binaryString.charCodeAt(i);
+			}
+			const encryptedData = bytes.buffer;
 
-		// Decrypt the data
-		const decryptedData = await window.crypto.subtle.decrypt(
-			{
-				name: 'RSA-OAEP',
-			},
-			await toUnit8Array(key, 'private'),
-			encryptedData
-		);
-		const decoder = new TextDecoder();
-		return decoder.decode(decryptedData);
+			// Decrypt the data
+			const decryptedData = await window.crypto.subtle.decrypt(
+				{
+					name: 'RSA-OAEP',
+				},
+				await toUnit8Array(key, 'private'),
+				encryptedData
+			);
+			const decoder = new TextDecoder();
+			decrypted.push(decoder.decode(decryptedData));
+		} 
+		return decrypted;
 	} catch (error) {
 		console.error('Failed to decrypt string with the provided key.');
 		console.error(error);

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { EyeInvisibleOutlined, CopyOutlined, ExclamationCircleFilled, EyeOutlined } from '@ant-design/icons';
+import OTP from 'otp-client';
+
 
 import encryption from '../../services/encryption';
 import { Avatar, Tabs, Typography, Modal, Space, Dropdown, Form, Input, Tooltip } from 'antd';
@@ -10,6 +12,8 @@ import EditSecret from './EditSecret';
 export default function SecretDetails(props) {
 	const [edit, setEdit] = useState(false);
 	const [plaintext, setPlaintext] = useState('');
+	const [totp, setTotp] = useState('');
+	const [totpSecret, setTotpSecret] = useState('');
 	const [secret, setSecret] = useState();
 	const [visible, setVisible] = useState(false);
 
@@ -23,13 +27,25 @@ export default function SecretDetails(props) {
 	};
 
 	useEffect(() => {
+		setInterval(() => {
+			setTotp(new OTP(totpSecret).getToken());
+		}, 30000);
+	}, []);
+
+	useEffect(() => {
 		setPlaintext('');
 		setSecret(props.secret);
 		setEdit(false);
 		let key = props.recovery ? props.recovery : props.keys.privateKey;
-		encryption.decrypt(props.secret?.vault?.ciphertext, key)
+		encryption.decrypt([props.secret?.vault?.ciphertext, props.secret?.vault?.totp], key)
 			.then((plainText) => {
-				setPlaintext(plainText);
+				setPlaintext(plainText[0]);
+				setTotpSecret(plainText[1]);
+				let otpObj = new OTP(plainText[1]);
+				setTotp(otpObj.getToken());
+				setTimeout(() => {
+					setTotp(otpObj.getToken());
+				}, otpObj.getTimeUntilNextTick()*1000);
 			})
 			.catch((error) => {
 				console.error(error);
@@ -62,8 +78,8 @@ export default function SecretDetails(props) {
 	}
 
 	return (<>
-		{ edit ? 
-			<EditSecret 
+		{edit ?
+			<EditSecret
 				openNotification={props.openNotification}
 				secret={props.secret}
 				user={props.user}
@@ -82,7 +98,7 @@ export default function SecretDetails(props) {
 					}));
 					props.openNotification('success', 'Operation successful', 'Password has been updated.');
 					setEdit(false);
-				}}/>:<></>}
+				}} /> : <></>}
 
 		<div style={{ display: 'flex' }}>
 			<div style={{ flex: 0, paddingTop: 2 }}><Avatar shape="square" style={{ backgroundColor: getAvatarColor(props.secret.name) }}>{props.secret.name?.substring(0, 1)}</Avatar> </div>
@@ -105,14 +121,14 @@ export default function SecretDetails(props) {
 							},
 						}}
 					>
-            Edit
+						Edit
 					</Dropdown.Button>
 				</Space>
 			</div>
 		</div>
 		<Tabs
 			className='drag'
-			defaultActiveKey="1" 
+			defaultActiveKey="1"
 			items={[{
 				key: '1',
 				label: 'Details',
@@ -131,14 +147,14 @@ export default function SecretDetails(props) {
 								<CopyOutlined
 									onClick={() => copy(secret.url)}
 								/>
-							</Tooltip>} style={{ borderStyle: 'dashed'}}/>
+							</Tooltip>} style={{ borderStyle: 'dashed' }} />
 						</Form.Item>
 						<Form.Item label="Username" name="username" initialValue={secret.username}>
 							<Input readOnly={!edit} suffix={<Tooltip title="Copy to clipboard">
 								<CopyOutlined
 									onClick={() => copy(secret.username)}
 								/>
-							</Tooltip>} style={{ borderStyle: 'dashed'}} />
+							</Tooltip>} style={{ borderStyle: 'dashed' }} />
 						</Form.Item>
 						<Form.Item label="Password" name="password" rules={[{ required: true }]} initialValue={plaintext}>
 							<Input readOnly={!edit} maxLength={190} type={visible ? 'text' : 'password'} value={plaintext} suffix={<>
@@ -155,7 +171,18 @@ export default function SecretDetails(props) {
 
 								</Tooltip>
 							</>
-							} style={{ borderStyle: 'dashed'}} />
+							} style={{ borderStyle: 'dashed' }} />
+						</Form.Item>
+
+						<Form.Item label="TOTP" rules={[{ required: true }]} initialValue={totp}>
+							<Input readOnly={true} maxLength={190} value={totp} suffix={<>
+								<Tooltip title="Copy to clipboard">
+									<CopyOutlined
+										onClick={() => copy(totp)}
+									/>
+								</Tooltip>
+							</>
+							} style={{ borderStyle: 'dashed' }} />
 						</Form.Item>
 					</Form>
 				</>
