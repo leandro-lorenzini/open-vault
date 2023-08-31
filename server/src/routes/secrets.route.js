@@ -226,7 +226,6 @@ Router.post('/:secretId/vault', (req, res) => {
     key: Joi.string().custom(validateObjectId),
     ciphertext: Joi.string().required(),
     totp: Joi.string().allow(''),
-    totpRecovery: Joi.string().allow(''),
     version: Joi.number().required(),
   }).validate({ ...req.body, ...req.params });
 
@@ -249,7 +248,6 @@ Router.post('/:secretId/vault', (req, res) => {
             value.key,
             value.ciphertext,
             value.totp,
-            value.totpRecovery,
             value.version
           )
           .then((vault) => {
@@ -282,7 +280,6 @@ Router.patch('/:secretId/vault', (req, res) => {
     key: Joi.string().custom(validateObjectId).required(),
     ciphertext: Joi.string().required().required(),
     totp: Joi.string().allow(''),
-    totpRecovery: Joi.string().allow(''),
     version: Joi.number().required().required(),
   }).validate({ ...req.body, ...req.params });
 
@@ -305,7 +302,6 @@ Router.patch('/:secretId/vault', (req, res) => {
             value.key,
             value.ciphertext,
             value.totp,
-            value.totpRecovery,
             value.version
           )
           .then(() => {
