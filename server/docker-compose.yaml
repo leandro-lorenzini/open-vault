@@ -26,9 +26,6 @@ services:
       - mongodata:/data/db
     ports:
       - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: <MongoUser>
-      MONGO_INITDB_ROOT_PASSWORD: <MongoPassword>
 
 volumes:
   mongodata:
