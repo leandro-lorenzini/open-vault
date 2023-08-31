@@ -22,7 +22,7 @@ The building process only generates the installer for the current OS, so you mig
 ### Deploying the server
 1. Clone the repository to the server where you want to deploy the application.
 2. Copy the [client installer files](../../releases) to the sever's `assets` folder, those files can be found under the release page of this repository. If you built the client by yourself, then youse the instead.
-3. Set the environment variables
+3. Update the ```./server/docker-compose``` variables or set the following environment variables
 ```bash
 export DATABASE_URL="mongodb://<USER>:<PASSWD>@<MONGO-URL>:27017/open-vault?authSource=admin"
 export URL="https://<SERVER FQDN>/"
