@@ -8,16 +8,27 @@ const mongoose = require('mongoose');
  * @param {String} user
  * @param {String} key
  * @param {String} ciphertext
+ * @param {String} totp
  * @param {Number} version
  * @returns {Promise}
  */
-function add(organization, folder, secret, user, key, ciphertext, version) {
+function add(
+  organization,
+  folder,
+  secret,
+  user,
+  key,
+  ciphertext,
+  totp,
+  version
+) {
   return new Promise((resolve, reject) => {
     let vault = {
       _id: new mongoose.Types.ObjectId(),
       user,
       key,
       ciphertext,
+      totp,
       version,
     };
     FolderModel.updateOne(
@@ -44,16 +55,27 @@ function add(organization, folder, secret, user, key, ciphertext, version) {
  * @param {String} user
  * @param {String} key
  * @param {String} ciphertext
+ * @param {String} totp
  * @param {Number} version
  * @returns {Promise}
  */
-function update(organization, folder, secret, user, key, ciphertext, version) {
+function update(
+  organization,
+  folder,
+  secret,
+  user,
+  key,
+  ciphertext,
+  totp,
+  version
+) {
   return new Promise((resolve, reject) => {
     FolderModel.updateOne(
       { _id: folder, organization },
       {
         $set: {
           'secrets.$[s].vaults.$[v].ciphertext': ciphertext,
+          'secrets.$[s].vaults.$[v].totp': totp,
           'secrets.$[s].vaults.$[v].version': version,
         },
       },
