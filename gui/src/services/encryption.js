@@ -85,7 +85,6 @@ async function decrypt(ciphertext, key) {
 	ciphertext = Array.isArray(ciphertext) ? ciphertext : [ciphertext];
 	try {
 		for (let item of ciphertext) {
-			console.log(item);
 			console.log('Decrypting string with the provided key.');
 			// Convert base64 string back to ArrayBuffer
 			const binaryString = window.atob(item);
