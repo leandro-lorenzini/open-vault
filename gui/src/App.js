@@ -91,6 +91,7 @@ function App() {
 			console.log('No server address in memory, lauching setup screen.');
 			navigate('/setup');
 		} else {
+			console.log(`Trying to contact ${address} for setup information.`);
 			api.setup(address).then(data => {
 				if (!data.active) {
 					console.log('Vault server side not configured, launching signup view.');

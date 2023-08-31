@@ -10,7 +10,7 @@ let logStream = fs.createWriteStream(path.join(os.homedir(), 'vault.log'), { fla
 
 // Ignore certificate during development
 if (isDev) {
-	process.env.NODE_TLS_REJECT_UNAUTHORIZED = '1';
+	process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 	app.commandLine.appendSwitch('ignore-certificate-errors');
 }
 

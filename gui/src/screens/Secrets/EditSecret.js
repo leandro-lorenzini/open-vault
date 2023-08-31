@@ -144,11 +144,12 @@ export default function EditSecret(props) {
 				</Form.Item>
 
 				<Form.Item
-					label="TOTP Secret code"
+					label="OTP Secret"
 					name="totp"
+					help="The base64 TOTP secret key"
 					initialValue={totp}
 				>
-					<Input value={totp} />
+					<Input.Password value={totp} />
 				</Form.Item>
 
 			</Drawer>

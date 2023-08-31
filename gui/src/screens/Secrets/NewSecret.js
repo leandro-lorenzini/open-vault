@@ -101,10 +101,11 @@ export default function New(props) {
 					<Input.Password />
 				</Form.Item>
 				<Form.Item
-					label="TOTP secret code"
+					label="TOTP secret"
+					help="The base64 TOTP secret key"
 					name="totp"
 				>
-					<Input />
+					<Input.Password />
 				</Form.Item>
 				<Form.Item label="Folder" name="folder" rules={[{ required: true }]}>
 					<Select placeholder="Please select a folder">

@@ -40,9 +40,11 @@ export default function SecretDetails(props) {
 
 				setTimeout(() => {
 					setTotp(otpObj.getToken());
+					
 					setInterval(() => {
 						setTotp(otpObj.getToken());
 					}, 2000);
+
 				}, otpObj.getTimeUntilNextTick()*1000);
 			})
 			.catch((error) => {
@@ -178,7 +180,7 @@ export default function SecretDetails(props) {
 									<CopyOutlined
 										onClick={() => {
 											let code = new OTP(totpSecret).getToken();
-											copy(code);
+											copy(code || '');
 										}}
 									/>
 								</Tooltip>
