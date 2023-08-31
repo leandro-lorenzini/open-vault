@@ -8,7 +8,11 @@ function url() {
 function setup(serverAddress) {
 	return new Promise((resolve, reject) => {
 		axios
-			.get(`${serverAddress}/setup`)
+			.get(`${serverAddress}/setup`, 
+				{ 
+					timeout: 5000, 
+					signal: AbortSignal.timeout(5000) 
+				})
 			.then((response) => {
 				localStorage.setItem('serverAddress', serverAddress);
 				resolve(response.data);

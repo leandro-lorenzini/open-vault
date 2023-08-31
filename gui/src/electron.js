@@ -9,10 +9,9 @@ const os = require('os');
 let logStream = fs.createWriteStream(path.join(os.homedir(), 'vault.log'), { flags: 'a' });
 
 // Ignore certificate during development
-if (isDev) {
-	process.env.NODE_TLS_REJECT_UNAUTHORIZED = '1';
-	app.commandLine.appendSwitch('ignore-certificate-errors');
-}
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+app.commandLine.appendSwitch('ignore-certificate-errors');
 
 let popup;
 let win;

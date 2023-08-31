@@ -34,16 +34,20 @@ export default function SecretDetails(props) {
 		encryption.decrypt([props.secret?.vault?.ciphertext, props.secret?.vault?.totp], key)
 			.then((plainText) => {
 				setPlaintext(plainText[0]);
-				setTotpSecret(plainText[1]);
-				let otpObj = new OTP(plainText[1]);
-				setTotp(otpObj.getToken());
-
-				setTimeout(() => {
+				if (props.secret?.vault?.totp && plainText[1]) {
+					setTotpSecret(plainText[1]);
+					let otpObj = new OTP(plainText[1]);
 					setTotp(otpObj.getToken());
-					setInterval(() => {
+
+					setTimeout(() => {
 						setTotp(otpObj.getToken());
-					}, 2000);
-				}, otpObj.getTimeUntilNextTick()*1000);
+						
+						setInterval(() => {
+							setTotp(otpObj.getToken());
+						}, 2000);
+
+					}, otpObj.getTimeUntilNextTick()*1000);
+				}
 			})
 			.catch((error) => {
 				console.error(error);
@@ -178,7 +182,7 @@ export default function SecretDetails(props) {
 									<CopyOutlined
 										onClick={() => {
 											let code = new OTP(totpSecret).getToken();
-											copy(code);
+											copy(code || '');
 										}}
 									/>
 								</Tooltip>

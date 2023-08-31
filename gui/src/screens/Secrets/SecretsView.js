@@ -81,6 +81,7 @@ export default function SecretsView(props) {
 						keys={props.keys} 
 						secret={props.selectedSecret} 
 						secrets={props.secrets} 
+						key={props.selectedSecret.id}
 						setSelectedSecret={props.setSelectedSecret} 
 						user={props.user} organization={props.organization}  
 						localPassword={props.localPassword} 

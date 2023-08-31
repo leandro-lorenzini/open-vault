@@ -53,9 +53,6 @@ export default function DashboardView() {
 	
 		return Math.floor(differenceInDays);
 	}
-	
-	console.log(calculateAgeInDays("1990-01-01")); // replace with the date you want to calculate age for
-	
 
 	const columnsInacessible = [
 		{
