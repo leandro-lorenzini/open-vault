@@ -102,7 +102,7 @@ export default function AuthenticationView() {
 						<Input.TextArea disabled={!sso}></Input.TextArea>
 					</Form.Item>
 
-					<Form.Item name='responseSigned' label="Response Signed" style={{ marginBottom: 20 }}>
+					<Form.Item name='responseSigned' label="Response Signed" style={{ marginBottom: 20 }} initialValue={organization.sso?.responseSigned}>
 						<Select disabled={!sso} defaultValue={organization.sso?.responseSigned}
 							options={[
 								{ value: false, label: 'No'},
@@ -110,7 +110,7 @@ export default function AuthenticationView() {
 							]}/>
 					</Form.Item>
 
-					<Form.Item name='assertionSigned' label="Assertion Signed" style={{ marginBottom: 20 }}>
+					<Form.Item name='assertionSigned' label="Assertion Signed" style={{ marginBottom: 20 }} initialValue={organization.sso?.assertionSigned}>
 						<Select disabled={!sso} defaultValue={organization.sso?.assertionSigned}
 							options={[
 								{ value: false, label: 'No'},
