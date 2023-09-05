@@ -13,11 +13,9 @@ services:
       URL: https://localhost
       PORT: 8000
       SESSION_SECRET: <SECRET>
-      INSTALLER_VERSION: 0.1.0
       WINDOWS_INSTALLER: true
       MAC_INSTALLER: true
       LINUX_INSTALLER: true
-
 
   mongo:
     container_name: open-vault-mongo

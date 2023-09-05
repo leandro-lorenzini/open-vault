@@ -1,4 +1,5 @@
 const express = require('express');
+const pjs = require('../../package.json');
 
 const Router = express.Router();
 
@@ -7,7 +8,7 @@ Router.use('/', (req, res) => {
     mac: process.env.MAC_INSTALLER,
     windows: process.env.WINDOWS_INSTALLER,
     linux: process.env.LINUX_INSTALLER,
-    version: process.env.INSTALLER_VERSION,
+    version: pjs.version,
   });
 });
 
