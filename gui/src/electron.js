@@ -1,4 +1,4 @@
-const { app, BrowserWindow, nativeTheme, ipcMain, globalShortcut } = require('electron');
+const { app, BrowserWindow, nativeTheme, ipcMain, globalShortcut, powerMonitor } = require('electron');
 const isDev = require('electron-is-dev');
 const path = require('path');
 const fs = require('fs');
@@ -54,6 +54,10 @@ function createWindow() {
 
 	nativeTheme.on('updated', () => {
 		win.webContents.send('theme-update', nativeTheme.shouldUseDarkColors ? 'dark' : 'light');
+	});
+	
+	powerMonitor.addListener('lock-screen', () => {
+		win.webContents.send('lock-screen', true);
 	});
 }
 

@@ -115,10 +115,10 @@ function get_sso_token(organization, token) {
 	});
 }
 
-function set_sso(enabled, issuer, entryPoint, certificate) {
+function set_sso(enabled, issuer, entryPoint, certificate, responseSigned, assertionSigned) {
 	return new Promise((resolve, reject) => {
 		axios
-			.put(`${url()}/organization/sso`, { enabled, issuer, entryPoint, certificate }, { withCredentials: true })
+			.put(`${url()}/organization/sso`, { enabled, issuer, entryPoint, certificate, responseSigned, assertionSigned }, { withCredentials: true })
 			.then((response) => {
 				resolve(response.data);
 			})

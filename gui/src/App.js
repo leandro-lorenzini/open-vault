@@ -59,6 +59,14 @@ function App() {
 	};
 
 	useEffect(() => {
+		window.electron.ipcRenderer.on('lock-screen', () => {
+			console.log("Clearing master password from application memory");
+			setLocalPassword(null);
+			navigate('/local');
+		});
+	}, []);
+
+	useEffect(() => {
 		try {
 			window.electron.ipcRenderer.invoke('theme').then(value => {
 				if (!darkModePrefence || darkModePrefence === 'auto') {

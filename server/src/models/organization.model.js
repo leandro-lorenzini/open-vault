@@ -11,6 +11,8 @@ const sso = new mongoose.Schema({
   entryPoint: { type: String, required: true },
   issuer: { type: String, required: true },
   certificate: { type: String, required: true },
+  responseSigned: { type: Boolean, default: false },
+  assertionSigned: { type: Boolean, default: false },
 });
 
 const smtp = new mongoose.Schema({

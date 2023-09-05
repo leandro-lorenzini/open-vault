@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('passport');
-const SamlStrategy = require('passport-saml').Strategy;
+const SamlStrategy = require('@node-saml/passport-saml').Strategy;
 const organizationController = require('../controllers/organization.controller');
 const userController = require('../controllers/user.controller');
 
@@ -23,6 +23,9 @@ Router.use(async (req, res, next) => {
         entryPoint: organization.sso.entryPoint,
         issuer: organization.sso.issuer,
         cert: organization.sso.certificate,
+        wantAuthnResponseSigned: organization.sso.responseSigned || false,
+        wantAssertionsSigned: organization.sso.assertionSigned || false,
+        audience: 'open-vault'
       },
       (profile, done) => done(null, profile)
     );

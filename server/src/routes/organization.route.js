@@ -106,6 +106,8 @@ Router.put('/sso', isAdmin, (req, res) => {
     issuer: Joi.string(),
     entryPoint: Joi.string(),
     certificate: Joi.string(),
+    responseSigned: Joi.boolean(),
+    assertionSigned: Joi.boolean(),
   }).validate(req.body);
 
   if (error) {
@@ -118,7 +120,9 @@ Router.put('/sso', isAdmin, (req, res) => {
       value.enabled,
       value.issuer,
       value.entryPoint,
-      value.certificate
+      value.certificate,
+      value.responseSigned,
+      value.assertionSigned
     )
     .then((result) => {
       res.send(result);

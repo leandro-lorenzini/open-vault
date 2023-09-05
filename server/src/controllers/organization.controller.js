@@ -34,15 +34,19 @@ function create(name, key) {
  * @param {String} issuer
  * @param {String} entryPoint
  * @param {String} certificate
+ * @param {Boolean} responseSigned
+ * @param {Boolean} assertionSigned
  * @returns {Promise}
  */
-function set_sso(organization, enabled, issuer, entryPoint, certificate) {
+function set_sso(organization, enabled, issuer, entryPoint, certificate, responseSigned, assertionSigned) {
   return new Promise((resolve, reject) => {
     let sso = {
       enabled,
       issuer,
       entryPoint,
       certificate,
+      responseSigned,
+      assertionSigned
     };
     organizationModel
       .updateOne({ _id: organization }, { sso })
