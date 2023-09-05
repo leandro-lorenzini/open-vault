@@ -103,7 +103,7 @@ export default function AuthenticationView() {
 					</Form.Item>
 
 					<Form.Item name='responseSigned' label="Response Signed" style={{ marginBottom: 20 }}>
-						<Select defaultValue={organization.sso?.responseSigned}
+						<Select disabled={!sso} defaultValue={organization.sso?.responseSigned}
 							options={[
 								{ value: false, label: 'No'},
 								{ value: true, label: 'Yes'}
@@ -111,7 +111,7 @@ export default function AuthenticationView() {
 					</Form.Item>
 
 					<Form.Item name='assertionSigned' label="Assertion Signed" style={{ marginBottom: 20 }}>
-						<Select defaultValue={organization.sso?.assertionSigned}
+						<Select disabled={!sso} defaultValue={organization.sso?.assertionSigned}
 							options={[
 								{ value: false, label: 'No'},
 								{ value: true, label: 'Yes'}
