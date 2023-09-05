@@ -39,9 +39,9 @@
   "scripts": {
     "react": "eslint . --fix && export REACT_APP_VERSION=$npm_package_version && react-scripts start",
     "build": "export REACT_APP_VERSION=$npm_package_version && react-scripts build",
-    "start": "export REACT_APP_VERSION=$npm_package_version && electron-forge start",
-    "package": "export REACT_APP_VERSION=$npm_package_version && electron-forge package",
-    "make": "export REACT_APP_VERSION=$npm_package_version && electron-forge make"
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "eslintConfig": {
     "extends": [
