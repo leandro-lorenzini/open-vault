@@ -3,7 +3,6 @@ import CryptoJS from 'crypto-js';
 import api from './api';
 
 const defaultError = 'Error Encryption Library';
-let fileName = 'vault.json';
 
 /**
  * Convert key spring to toUnit8Array
@@ -142,7 +141,7 @@ function generateKeys(userId, password) {
 			} else {
 				// Store keys created for user
 				api.key.add(publicKeyBase64).then(async result => {
-					let storedKeys = await window.electron.ipcRenderer.invoke('read-file', fileName);
+					let storedKeys = await window.electron.ipcRenderer.invoke('read-file');
 					storedKeys = storedKeys?.length ? JSON.parse(storedKeys) : {};
 					storedKeys[userId] = {};
 					storedKeys[userId].publicKey = publicKeyBase64;
@@ -151,7 +150,7 @@ function generateKeys(userId, password) {
 					storedKeys[userId].localPassword = hashString(password, userId);
 
 					// eslint-disable-next-line sonarjs/no-duplicate-string
-					window.electron.ipcRenderer.send('write-file', { fileName: fileName, content: JSON.stringify(storedKeys) });
+					window.electron.ipcRenderer.send('write-file', { content: JSON.stringify(storedKeys) });
 					resolve();
 				}).catch(error => {
 					reject(error);
@@ -169,12 +168,12 @@ function deleteKey(userId) {
 	return new Promise((resolve, reject) => {
 		try {
 			(async () => {
-				let storedKeys = await window.electron.ipcRenderer.invoke('read-file', fileName);
+				let storedKeys = await window.electron.ipcRenderer.invoke('read-file');
 				storedKeys = storedKeys?.length ? JSON.parse(storedKeys) : {};
 				if (storedKeys[userId]) {
 					delete storedKeys[userId];
 				}
-				window.electron.ipcRenderer.send('write-file', { fileName: fileName, content: JSON.stringify(storedKeys) });
+				window.electron.ipcRenderer.send('write-file', { content: JSON.stringify(storedKeys) });
 				resolve();
 			})();
 		} catch (error) {
@@ -187,7 +186,7 @@ function updateLocalPassword(userId, password, newPassword) {
 	return new Promise((resolve, reject) => {
 		try {
 			(async () => {
-				let storedKeys = await window.electron.ipcRenderer.invoke('read-file', fileName);
+				let storedKeys = await window.electron.ipcRenderer.invoke('read-file');
 				storedKeys = storedKeys?.length ? JSON.parse(storedKeys) : {};
 
 				if (storedKeys[userId]) {
@@ -196,7 +195,7 @@ function updateLocalPassword(userId, password, newPassword) {
 					storedKeys[userId].localPassword = hashString(newPassword, userId);
 				}
 
-				window.electron.ipcRenderer.send('write-file', { fileName: fileName, content: JSON.stringify(storedKeys) });
+				window.electron.ipcRenderer.send('write-file', { content: JSON.stringify(storedKeys) });
 				resolve();
 			})();
 		} catch (error) {
@@ -212,7 +211,7 @@ function updateLocalPassword(userId, password, newPassword) {
  */
 async function getKeys(userId, password) {
 	try {
-		let keys = await window.electron.ipcRenderer.invoke('read-file', fileName);
+		let keys = await window.electron.ipcRenderer.invoke('read-file');
 		keys = keys ? JSON.parse(keys) : {};
 		if (keys && password) {
 			keys[userId].privateKey = decryptStringWithPassword(keys[userId].privateKey, password);

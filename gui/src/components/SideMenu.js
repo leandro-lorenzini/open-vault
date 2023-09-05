@@ -11,7 +11,7 @@ import {
 	SettingOutlined,
 	MailOutlined
 } from '@ant-design/icons';
-import { Menu, notification } from 'antd';
+import { Menu, notification, Tooltip } from 'antd';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Api from '../services/api';
@@ -129,9 +129,9 @@ export default function SideMenu(props) {
 
 										if (folder.user) {
 											let name = props.users?.filter(u => u.id === folder.user)[0]?.name;
-											return `${name}'s personal folder`;
+											return <Tooltip title={`${name}'s personal folder`}>{name}`s personal folder</Tooltip>;
 										}
-										return folder.name;
+										return <Tooltip title={folder.name}>{folder.name}</Tooltip>;
 									})(),
 									icon: <FolderOpenOutlined />,
 									onClick: () => {

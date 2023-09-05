@@ -18,7 +18,7 @@ export default function PreferencesView(props) {
 				<Divider style={{ marginTop: 0, marginBottom: 15}}/>
 				<Typography.Title level={5}>User interface</Typography.Title>
 				<Form layout='vertical'>
-					<Form.Item label='Dark mode' required>
+					<Form.Item label='Dark mode' required initialValue={'auto'}>
 						<Select 
 							name="darkmode" 
 							onChange={onChange} 

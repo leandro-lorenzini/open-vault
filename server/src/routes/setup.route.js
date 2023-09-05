@@ -1,5 +1,6 @@
 const express = require('express');
 const organizationController = require('../controllers/organization.controller');
+const pjs = require('../../package.json');
 
 const Router = express.Router();
 
@@ -14,6 +15,7 @@ Router.get('/', (req, res) => {
         active: true,
         id: doc._id,
         sso: doc.sso?.enabled ? true : false,
+        version: pjs.version,
       });
     })
     .catch((error) => {

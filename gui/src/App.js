@@ -22,6 +22,7 @@ import ChangePasswordView from './screens/Profile/ChangePasswordView';
 import PreferencesView from './screens/Profile/PreferencesView';
 import SmtpView from './screens/Settings/SmtpView';
 import ConnectionErrorView from './components/ConnectionErrorView';
+import VersionMismatchView from './components/VersionMismatchView';
 
 function App() {
 	const [user, setUser] = useState(null);
@@ -99,18 +100,23 @@ function App() {
 						navigate('/signup');
 					}, 500);
 				} else {
-					setOrganization(data);
-					console.log('Vault server is active, checking if user is already authenticated.');
-					api.auth.isAuthenticated().then((user) => {
-						console.log('User is already authenticated, complete app initialization.');
-						setAuthenticated(true);
-						setUser(user);
-						navigate('/local');
-					}).catch(error => {
-						console.log('User is not authenticated, launching login view.');
-						navigate('/signin');
-						console.error(error);
-					});
+					if (data.version !== process.env.REACT_APP_VERSION) {
+						console.log(`Server ${data.version} and GUI ${process.env.REACT_APP_VERSION} version mismatch.`);
+						navigate('/version-mismatch');
+					} else {
+						setOrganization(data);
+						console.log('Vault server is active, checking if user is already authenticated.');
+						api.auth.isAuthenticated().then((user) => {
+							console.log('User is already authenticated, complete app initialization.');
+							setAuthenticated(true);
+							setUser(user);
+							navigate('/local');
+						}).catch(error => {
+							console.log('User is not authenticated, launching login view.');
+							navigate('/signin');
+							console.error(error);
+						});
+					}
 				}
 			}).catch(error => {
 				console.error('Server saved in memory is not responding correctly, launching setup view');
@@ -129,10 +135,16 @@ function App() {
 			<div className='init-container' style={{ backgroundColor: backgroundColorContent(darkMode)}}>
 				<Routes>
 					<Route path="/loading" element={<></>}/>
+					<Route path="/version-mismatch" element={<VersionMismatchView
+						setup={() => {
+							navigate('/setup');
+						}}
+					/>}/>
 					<Route path="/setup" element={<SetupView
 						setOrganization={setOrganization} 
 						setSignup={() => navigate('/signup')} 
 						setLogin={() => navigate('/signin')} 
+						setVersionMismatch={() => navigate('/version-mismatch')}
 					/>}/>
 					<Route path="/signup" element={<SignupView 
 						setUser={() => {

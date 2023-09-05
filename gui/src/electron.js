@@ -6,7 +6,7 @@ const os = require('os');
 
 // Client log location
 // eslint-disable-next-line security/detect-non-literal-fs-filename
-let logStream = fs.createWriteStream(path.join(os.homedir(), 'vault.log'), { flags: 'a' });
+let logStream = fs.createWriteStream(path.join(os.homedir(), 'open-vault.log'), { flags: 'a' });
 
 // Ignore certificate during development
 
@@ -101,15 +101,28 @@ app.whenReady().then(() => {
 		return nativeTheme.shouldUseDarkColors ? 'dark' : 'light';
 	});
 
+	const fileName = path.join(os.homedir(), "open-vault.json");
+	
+	// For compatibility purposes
+	const oldFileName = path.join(os.homedir(), "vault.json");
+
+	// eslint-disable-next-line security/detect-non-literal-fs-filename
+	if (fs.existsSync(oldFileName)) {
+		// eslint-disable-next-line security/detect-non-literal-fs-filename
+		fs.renameSync(oldFileName, fileName);
+		console.log(`Renamed file from ${oldFileName} to ${fileName}`);
+	}
+
 	// Used to read/write the private key to the disk
-	ipcMain.on('write-file', (event, { fileName, content }) => {
+	ipcMain.on('write-file', (event, { content }) => {
 		// eslint-disable-next-line security/detect-non-literal-fs-filename
-		fs.writeFileSync(path.join(os.homedir(), fileName), content);
+		fs.writeFileSync(fileName, content);
 	});
-	ipcMain.handle('read-file', (event, fileName) => {
+	ipcMain.handle('read-file', () => {
 		// eslint-disable-next-line security/detect-non-literal-fs-filename
-		if (fs.existsSync(path.join(os.homedir(), fileName))) {
-			return fs.readFileSync(path.join(os.homedir(), fileName), 'utf-8');
+		if (fs.existsSync(fileName)) {
+			// eslint-disable-next-line security/detect-non-literal-fs-filename
+			return fs.readFileSync(fileName, 'utf-8');
 		} else {
 			return '{}';
 		}

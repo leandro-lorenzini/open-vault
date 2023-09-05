@@ -29,12 +29,18 @@ function SetupView(props) {
 					setLoading(true);
 					Api.setup(form.address).then(data => {
 						localStorage.setItem('serverAddress', form.address);
-						if (data.active) {
-							props.setOrganization(data);
-							props.setLogin();
+
+						if (data.version !== process.env.REACT_APP_VERSION) {
+							props.setVersionMismatch();
 						} else {
-							props.setSignup(true);
+							if (data.active) {
+								props.setOrganization(data);
+								props.setLogin();
+							} else {
+								props.setSignup(true);
+							}
 						}
+
 					}).catch(error => {
 						openNotification('error', 'Operation error', 'Failed to contact the server, verify the address and try again.');
 						console.error(error);
