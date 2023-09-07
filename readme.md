@@ -16,7 +16,8 @@ Open-vault is password manager designed for small and medium organizations with 
 :white_check_mark: Organization master key for password/TOTP recovery
 
 ## Deploying the server
-There are two out of the box deployment methods, kubernetes and docker-container.
+There are two out of the box deployment methods, kubernetes and docker-container, 
+they botth include the configuration for a mongo instance, remove that configuration if you want to use an existing mongodb instance.
 
 ### Kubernetes
 ```
