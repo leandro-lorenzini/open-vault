@@ -32,30 +32,38 @@ npm run build && npm run make
 The building process only generates the installer for the current OS, so you might need to run these commands in different devices to get other version of the installar as well. Eg. Run the commands on MacOs to generate the pkg and the dmg files, run it on Windows to generate the exe and chocolatey files.
 
 ### Deploying the server
-1. Clone the repository to the server where you want to deploy the application.
-2. Copy the [client installer files](../../releases) to the sever's `assets` folder, those files can be found under the release page of this repository. If you built the client by yourself, then use those instead.
-3. Update the ```./server/docker-compose``` variables
-```bash
-DATABASE_URL="mongodb://<USER>:<PASSWD>@<MONGO-URL>:27017/open-vault?authSource=admin"
-URL="https://<SERVER FQDN>/"
-PORT=443
-SESSION_SECRET="<RAMDOM STRINGT>"
-INSTALLER_VERSION="0.1.3"
-WINDOWS_INSTALLER=<0|1>
-MAC_INSTALLER=<0|1>
-LINUX_INSTALLER=<0|1>
+There are two out of the box deployemtn methods, kubernetes and docker-container.
+
+#### Kubernetes
 ```
-5. Place the server SSL certificate as follows:
-    - ./server/cert.pem
-    - ./server/key.pem
-Note that a valid certificate has to be provided, otherwise the client won't be able to communicate with the server when running the client in Production mode.
-6. Start the server.
-```bash
-cd server
+git clone https://github.com/leandro-lorenzini/open-vault.git && cd open-vault/kubernetes
+# Update the environment variables under deployment.yaml
+# Note that with the current implementation you must use a proxy with SSL enabled when using Kubernetes.
+kubectl apply -f .
+```
+
+#### Docker-compose
+```
+git clone https://github.com/leandro-lorenzini/open-vault.git && cd open-vault/server
+# Update the environment variables under docker-compose.yml
+# If you have built the clients by yourself, don't forget to place them under ```assets/installers``` and yo update the installer variables.
+# Place your SSL key.pem and cert.pem under ```./server``` if you wish to run the project with SSL instead of using a proxy.
 docker-compose up -d
 ```
-6. Configure the server.
+
+#### Configure the server
 Install the client that has been generated on the first step on your local machine. Once the client starts it will then detect that this is a new server deployment and will ask you to setup the organization. Simply provide the information the if asked during the wizard and that's it.
+
+#### Environment variables reference
+|Variable               |Required   |Default value                          |Description                                                    |
+|-----------------------|-----------|---------------------------------------|---------------------------------------------------------------|
+|DATABASE_URL           |No         |mongodb://mongo:27017/open-vault       |                                                               |
+|URL                    |Yes        |                                       |The url to access the server, MUST start with ```https://``    |
+|SESSION_SECRET         |Yes        |                                       |A random strong secret for session storage                     |
+|WINDOWS_INSTALLER      |No         |Github Link to the client installer    |Only set this variable if you have built the client by yourself|
+|MAC_INSTALLER          |No         |Github Link to the client installer    |Only set this variable if you have built the client by yourself|
+|LINUX_DEB_INSTALLER    |No         |Github Link to the client installer    |Only set this variable if you have built the client by yourself|
+|LINUX_RPM_INSTALLER    |No         |Github Link to the client installer    |Only set this variable if you have built the client by yourself|
 
 ## Development notes
 ### Technology & stack
@@ -94,4 +102,3 @@ When a user creates or updates a password, the password will be encrypted using 
 
 ### Project status and disclaimer
 This is a new project, and I only work on it during my free time, so I'm more than happy to have collaborators. Feel free to challenge the concept, the code logic and to create pull requests with improvements.
-

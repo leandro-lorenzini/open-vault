@@ -18,27 +18,26 @@ html(lang='en')
     .container.my-5
       .row.justify-content-center
         // Mac OS
-        if mac
-          .col-md-4.download-card
-            .card
-              .card-body.text-center
-                i(class='fab fa-apple fa-3x mb-3')
-                h5.card-title Mac OS
-                a.btn.btn-custom(href=`/assets/open-vault-${version}-mac.dmg`, download) Download DMG
+        .col-md-4.download-card
+          .card
+            .card-body.text-center
+              i(class='fab fa-apple fa-3x mb-3')
+              h5.card-title Mac OS
+              a.btn.btn-custom(href=`${mac}`, download) Download DMG
+
         // Windows
-        if windows
-          .col-md-4.download-card
-            .card
-              .card-body.text-center
-                i.fab.fa-windows.fa-3x.mb-3
-                h5.card-title Windows
-                a.btn.btn-custom(href=`/assets/open-vault-${version}.exe`, download) Download EXE
+        .col-md-4.download-card
+          .card
+            .card-body.text-center
+              i.fab.fa-windows.fa-3x.mb-3
+              h5.card-title Windows
+              a.btn.btn-custom(href=`${windows}`, download) Download EXE
+
         // Linux
-        if linux
-          .col-md-4.download-card
-            .card
-              .card-body.text-center
-                i.fab.fa-linux.fa-3x.mb-3
-                h5.card-title Linux
-                a.btn.btn-custom(href=`/assets/open-vault_${version}_amd64.deb`, download) Download DEB
-                a.btn.btn-custom(href=`/assets/open-vault-${version}.x86_64.rpm`, download) Download RPM
+        .col-md-4.download-card
+          .card
+            .card-body.text-center
+              i.fab.fa-linux.fa-3x.mb-3
+              h5.card-title Linux
+              a.btn.btn-custom(href=`${linux_deb}`, download) Download DEB
+              a.btn.btn-custom(href=`${linux_rpm}`, download) Download RPM

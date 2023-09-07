@@ -46,7 +46,8 @@ app.use(
       maxAge: 3600000 * 12,
     },
     store: MongoStore.create({
-      mongoUrl: process.env.DATABASE_URL,
+      mongoUrl: process.env.DATABASE_URL || 
+        'mongodb://mongo:27017/open-vault',
     }),
   })
 );
@@ -77,19 +78,28 @@ app.use((err, req, res, next) => {
 
 // Connect to the database
 mongoose
-  .connect(process.env.DATABASE_URL)
+  .connect(process.env.DATABASE_URL || 
+    'mongodb://mongo:27017/open-vault')
   .then(() => {
-    const httpsServer = https.createServer(
-      {
-        key: fs.readFileSync('./key.pem'),
-        cert: fs.readFileSync('./cert.pem'),
-      },
-      app
-    );
+    if(process.env.SSL) {
+      const httpsServer = https.createServer(
+        {
+          key: fs.readFileSync('./key.pem'),
+          cert: fs.readFileSync('./cert.pem'),
+        },
+        app
+      );
 
-    httpsServer.listen(process.env.PORT, () => {
-      console.log(`HTTPS Server running on port ${process.env.PORT}`);
-    });
+      httpsServer.listen(process.env.PORT || 4443, () => {
+        console.log(`HTTPS Server running on port ${process.env.PORT || 4443}`);
+      });
+
+    } else {
+      app.listen(process.env.PORT || 8080, () => {
+        console.log(`HTTP Server running on port ${process.env.PORT || 8080}`);
+      });
+    }
+
   })
   .catch((error) => {
     console.error('Database connection error');

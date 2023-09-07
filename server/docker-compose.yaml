@@ -1,24 +1,27 @@
 version: "3"
 services:
-  api:
-    container_name: open-vault-api
-    restart: always
+  server:
     build: .
+    image: open-vault
+    restart: always
     ports:
-      - "443:8000"
+      - "80:8080"
+      - "443:4443"
     links:
       - mongo
     environment: 
-      DATABASE_URL: mongodb://mongo:27017/open-vault
       URL: https://localhost
-      PORT: 8000
       SESSION_SECRET: <SECRET>
-      WINDOWS_INSTALLER: true
-      MAC_INSTALLER: true
-      LINUX_INSTALLER: true
+      #SSL: true
+      
+      # Update the following variables if you built the client by yourself #
+      #WINDOWS_INSTALLER: '/assets/installers/file_name.exe'
+      #MAC_INSTALLER: '/assets/installers/file_name.dmg'
+      #LINUX_DEB_INSTALLER: '/assets/installers/file_name.deb'
+      #LINUX_RPM_INSTALLER: '/assets/installers/file_name.rpm'
 
   mongo:
-    container_name: open-vault-mongo
+    container_name: mongo
     image: mongo:latest
     volumes:
       - mongodata:/data/db
