@@ -9,7 +9,7 @@ Router.get('/', (req, res) => {
     .find()
     .then((doc) => {
       if (!doc) {
-        return res.json({ active: false });
+        return res.json({ active: false, version: pjs.version });
       }
       res.json({
         active: true,
