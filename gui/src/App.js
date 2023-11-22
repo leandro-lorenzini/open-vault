@@ -143,7 +143,7 @@ function App() {
 		return <ConfigProvider theme={getTheme()}>
 			<div className='init-container' style={{ backgroundColor: backgroundColorContent(darkMode)}}>
 				<Routes>
-					<Route path="/setup" element={<LoadingView darkMode={darkMode}/>}/>
+					<Route path="/loading" element={<LoadingView darkMode={darkMode}/>}/>
 					<Route path="/version-mismatch" element={<VersionMismatchView
 						setup={() => {
 							navigate('/setup');
