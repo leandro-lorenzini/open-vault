@@ -3,7 +3,7 @@
     "format": "prettier-eslint --write \"{,!(node_modules)/**/}*.{js,jsx}\"",
     "start": "nodemon server.js"
   },
-  "version": "0.1.5",
+  "version": "0.1.6",
   "dependencies": {
     "@node-saml/passport-saml": "^4.0.4",
     "connect-mongo": "^5.0.0",
