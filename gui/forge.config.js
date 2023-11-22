@@ -18,13 +18,13 @@ module.exports = {
 		{
 			name: "@electron-forge/maker-deb",
 			config: {
-				bin: 'Open-Vault',
+				bin: 'OpenVault',
 			},
 		},
 		{
 			name: "@electron-forge/maker-rpm",
 			config: {
-				bin: 'Open-Vault',
+				bin: 'OpenVault',
 			},
 		},
 	],
