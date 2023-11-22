@@ -3,7 +3,7 @@
   "version": "0.1.6",
   "private": false,
   "license": "MIT",
-  "productName": "Open-Vault",
+  "productName": "OpenVault",
   "description": "Securely store and share passwords whithin an organization",
   "author": {
     "name": "Leandro Lorenzini",
