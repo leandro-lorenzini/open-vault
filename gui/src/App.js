@@ -23,6 +23,7 @@ import PreferencesView from './screens/Profile/PreferencesView';
 import SmtpView from './screens/Settings/SmtpView';
 import ConnectionErrorView from './components/ConnectionErrorView';
 import VersionMismatchView from './components/VersionMismatchView';
+import LoadingView from './components/LoadingView';
 
 function App() {
 	const [user, setUser] = useState(null);
@@ -142,7 +143,7 @@ function App() {
 		return <ConfigProvider theme={getTheme()}>
 			<div className='init-container' style={{ backgroundColor: backgroundColorContent(darkMode)}}>
 				<Routes>
-					<Route path="/loading" element={<></>}/>
+					<Route path="/loading" element={<LoadingView darkMode={darkMode}/>}/>
 					<Route path="/version-mismatch" element={<VersionMismatchView
 						setup={() => {
 							navigate('/setup');
@@ -150,8 +151,8 @@ function App() {
 					/>}/>
 					<Route path="/setup" element={<SetupView
 						setOrganization={setOrganization} 
-						setSignup={() => navigate('/signup')} 
-						setLogin={() => navigate('/signin')} 
+						setSignup={() => navigate('/signup')}
+						setLogin={() => navigate('/signin')}
 						setVersionMismatch={() => navigate('/version-mismatch')}
 					/>}/>
 					<Route path="/signup" element={<SignupView 

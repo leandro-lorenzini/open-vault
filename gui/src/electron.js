@@ -18,6 +18,7 @@ if (isDev) {
 let popup;
 let win;
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 function createWindow() {
 	win = new BrowserWindow({
 		width: 1200,
@@ -49,15 +50,21 @@ function createWindow() {
 	}
 
 	win.webContents.on('did-finish-load', () => {
-		win.webContents.send('theme-update', nativeTheme.shouldUseDarkColors ? 'dark' : 'light');
+		if (win && !win.isDestroyed()) {
+			win.webContents.send('theme-update', nativeTheme.shouldUseDarkColors ? 'dark' : 'light');
+		}
 	});
 
 	nativeTheme.on('updated', () => {
-		win.webContents.send('theme-update', nativeTheme.shouldUseDarkColors ? 'dark' : 'light');
+		if (win && !win.isDestroyed()) {
+			win.webContents.send('theme-update', nativeTheme.shouldUseDarkColors ? 'dark' : 'light');
+		}
 	});
 	
 	powerMonitor.addListener('lock-screen', () => {
-		win.webContents.send('lock-screen', true);
+		if (win && !win.isDestroyed()) {
+			win.webContents.send('lock-screen', true);
+		}
 	});
 }
 
