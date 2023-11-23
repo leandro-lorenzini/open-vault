@@ -32,7 +32,7 @@ There are two out of the box deployment methods, kubernetes and docker-container
 they botth include the configuration for a mongo instance, remove that configuration if you want to use an existing mongodb instance.
 
 ### Kubernetes
-```
+```bash
 git clone https://github.com/leandro-lorenzini/open-vault.git && cd open-vault/kubernetes
 # Update the environment variables under deployment.yaml
 # Note that with the current implementation you must use a proxy with SSL enabled when using Kubernetes.
@@ -40,7 +40,7 @@ kubectl apply -f .
 ```
 
 ### Docker-compose
-```
+```bash
 git clone https://github.com/leandro-lorenzini/open-vault.git && cd open-vault/server
 # Update the environment variables under docker-compose.yml
 # If you have built the clients by yourself, don't forget to place them under ```assets/installers``` and yo update the installer variables.
