@@ -62,8 +62,7 @@ docker-compose up -d
 ### Configure the server
 The server configuration is done via the Desktop client.
 
-Download and install the desktop client (Under the release page) that matched the installed server version. You can also build the client by your self by following the instreuction on the next section of this page. Once the client starts, you'll enter the server address and the client will then detect that this is a new server deployment and will ask you to setup the organization. Simply provide the information the if asked during the wizard and that's it.
-
+Download and install the desktop client (Under the release page) that matched the installed server version. You can also build the client by yourself following the instreuction on the next section of this page. Once the client starts, you'll enter the server address and the client will then detect that this is a new server deployment and will ask you to setup the organization. Simply provide the information the if asked during the wizard and that's it.
 
 ## Building the client by yourself
 The advantage of building it yourself is that you can set the default server address, so if you are deploying to multiple users, they won't have to manually set the server address.
