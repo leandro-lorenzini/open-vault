@@ -56,7 +56,7 @@ export default function SecretsList(props) {
 								</Avatar>
 							</Badge>}
 						title={<Row justify="space-between">
-							<Col>{item.name} {item.strength}</Col>
+							<Col>{item.name}</Col>
 							<Col>
 								{!item.vault?.ciphertext ? <Tag icon={<SyncOutlined spin />} color="processing">Syncing</Tag> : <></>}
 								{item.vault?.ciphertext && item.vault.version !== item.version ? <Tag icon={<ClockCircleOutlined />} color="warning">Outdated</Tag> : <></>}
