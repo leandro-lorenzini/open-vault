@@ -22,7 +22,7 @@ export default function PreferencesView(props) {
 						<Select 
 							name="darkmode" 
 							onChange={onChange} 
-							defaultValue={darkMode}
+							defaultValue={darkMode ? darkMode:'auto'}
 							options={[
 								{ value: 'auto', label: 'Automatic' },
 								{ value: 'enabled', label: 'Enabled' },
