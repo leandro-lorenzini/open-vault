@@ -173,7 +173,7 @@ export default function DashboardView() {
 				<Row>
 					<Col span={8} style={{ padding: 10, paddingBottom: 20 }}>
 						<Alert
-							message={<div style={{marginTop: -4}}>Exposed passwords: {inaccessible.length}</div>}
+							message={<div style={{marginTop: -4}}>Exposed secrets: {inaccessible.length}</div>}
 							description='Access to password has been revoked from one or more user but password remains unchanged.'
 							type={inaccessible.length ? 'error':'success'}
 							showIcon
@@ -181,7 +181,7 @@ export default function DashboardView() {
 					</Col>
 					<Col span={8} style={{ padding: 10 }}>
 						<Alert
-							message={<div style={{marginTop: -4}}>Weak passwords: {weak.length}</div>}
+							message={<div style={{marginTop: -4}}>Weak secrets: {weak.length}</div>}
 							description='Passwords with 8 characters or less and possibly without digits and special characters.'
 							type={weak.length ? 'warning':'info'}
 							showIcon
@@ -189,8 +189,9 @@ export default function DashboardView() {
 					</Col>
 					<Col span={8} style={{ padding: 10 }}>
 						<Alert
-							message={<div className='alert-dashboard'>Old passwords: {old.length}</div>}
-							description='Passwords with more than 8 characters but without digits or special characters.'
+							style={{ minHeight: 160 }}
+							message={<div className='alert-dashboard'>Old secrets: {old.length}</div>}
+							description='Passwords that are older than 100 days.'
 							type={old.length ? 'warning':'info'}
 							showIcon
 						/>

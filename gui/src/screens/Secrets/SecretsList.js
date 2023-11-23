@@ -1,6 +1,6 @@
 
 import { SearchOutlined, SyncOutlined, ClockCircleOutlined } from '@ant-design/icons';
-import { List, Avatar, Tag, Input, Row, Col } from 'antd';
+import { List, Avatar, Tag, Input, Row, Col, Badge } from 'antd';
 import { useState } from 'react';
 
 export default function SecretsList(props) {
@@ -50,11 +50,13 @@ export default function SecretsList(props) {
 				>
 					<List.Item.Meta
 						avatar={
-							<Avatar size={'small'} shape="square" style={{ backgroundColor: getAvatarColor(item.name?.substring(0, 1)) }}>
-								{item.name?.substring(0, 1)}
-							</Avatar>}
+							<Badge count={item.strength < 2 ? "!":null}>
+								<Avatar size={'small'} shape="square" style={{ backgroundColor: getAvatarColor(item.name?.substring(0, 1)) }}>
+									{item.name?.substring(0, 1)}
+								</Avatar>
+							</Badge>}
 						title={<Row justify="space-between">
-							<Col>{item.name}</Col>
+							<Col>{item.name} {item.strength}</Col>
 							<Col>
 								{!item.vault?.ciphertext ? <Tag icon={<SyncOutlined spin />} color="processing">Syncing</Tag> : <></>}
 								{item.vault?.ciphertext && item.vault.version !== item.version ? <Tag icon={<ClockCircleOutlined />} color="warning">Outdated</Tag> : <></>}

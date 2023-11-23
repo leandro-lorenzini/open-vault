@@ -18,7 +18,8 @@ hr {
 
 /* Search box on Secret List component */
 .search-input {
-  border-top: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
     border-left: none !important;
     border-right: none !important;
     border-radius: 0 !important;
@@ -28,7 +29,7 @@ hr {
     border-color: rgba(5, 5, 5, 0.06) !important;
 }
 .search-input:focus, .search-input:active, .search-input:hover {
-    border-color: rgba(5, 5, 5, 0.06) !important;
+    border-color: none !important;
 }
 
 /* Scrollbar */

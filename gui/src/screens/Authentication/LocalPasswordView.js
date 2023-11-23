@@ -112,7 +112,7 @@ function LocalPasswordView(props) {
 				>
 					<Typography.Title level={3}>Local Password</Typography.Title>
 					<Typography.Paragraph>
-						The local password is different from the one you use to login.
+						The local password might be different from the one you use to login.
 					</Typography.Paragraph>
 					<Form.Item
 						name="local"

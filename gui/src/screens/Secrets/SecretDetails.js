@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
 import { EyeInvisibleOutlined, CopyOutlined, ExclamationCircleFilled, EyeOutlined } from '@ant-design/icons';
 import { TOTP } from 'otpauth';
-
-
-
 import encryption from '../../services/encryption';
-import { Avatar, Tabs, Typography, Modal, Space, Dropdown, Form, Input, Tooltip } from 'antd';
+import { Avatar, Tabs, Typography, Modal, Space, Dropdown, Form, Input, Tooltip, Alert } from 'antd';
 import copy from 'copy-to-clipboard';
 import Api from '../../services/api';
 import EditSecret from './EditSecret';
@@ -180,6 +177,15 @@ export default function SecretDetails(props) {
 								</Tooltip>
 							</>
 							} style={{ borderStyle: 'dashed' }} />
+
+							{
+								secret?.strength  >= 2 ? <></> : 
+									<div style={{ marginTop: 5 }}>
+										{ secret.strength === 0 ? <Alert showIcon type='error' message="Very Weak password!"/>: <></>}
+										{ secret.strength === 1 ? <Alert showIcon type='warning' message="Weak password!"/>: <></>}
+									</div>
+							}
+							
 						</Form.Item>
 						
 						<Form.Item label="TOTP" rules={[{ required: true }]} initialValue={totp}>
