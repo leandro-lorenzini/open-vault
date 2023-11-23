@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { EyeInvisibleOutlined, CopyOutlined, ExclamationCircleFilled, EyeOutlined } from '@ant-design/icons';
-import OTP from 'otp-client';
+import { TOTP } from 'otpauth';
+
 
 
 import encryption from '../../services/encryption';
@@ -36,17 +37,22 @@ export default function SecretDetails(props) {
 				setPlaintext(plainText[0]);
 				if (props.secret?.vault?.totp && plainText[1]) {
 					setTotpSecret(plainText[1]);
-					let otpObj = new OTP(plainText[1]);
-					setTotp(otpObj.getToken());
+					let otpObj = new TOTP({
+						algorithm: 'SHA1',
+						digits: 6,
+						period: 30,
+						secret: plainText[1] 
+					});
+					setTotp(otpObj.generate());
 
 					setTimeout(() => {
-						setTotp(otpObj.getToken());
+						setTotp(otpObj.generate());
 						
 						setInterval(() => {
-							setTotp(otpObj.getToken());
+							setTotp(otpObj.generate());
 						}, 2000);
 
-					}, otpObj.getTimeUntilNextTick()*1000);
+					}, 10000);
 				}
 			})
 			.catch((error) => {
@@ -145,14 +151,14 @@ export default function SecretDetails(props) {
 						autoComplete="off">
 
 						<Form.Item label="URL" name="url" initialValue={secret.url}>
-							<Input readOnly={!edit} suffix={<Tooltip title="Copy to clipboard">
+							<Input readOnly={!edit} disabled={!secret.url} suffix={!secret.url ? <></> : <Tooltip title="Copy to clipboard">
 								<CopyOutlined
 									onClick={() => copy(secret.url)}
 								/>
 							</Tooltip>} style={{ borderStyle: 'dashed' }} />
 						</Form.Item>
 						<Form.Item label="Username" name="username" initialValue={secret.username}>
-							<Input readOnly={!edit} suffix={<Tooltip title="Copy to clipboard">
+							<Input readOnly={!edit} disabled={!secret.username} suffix={!secret.username ? <></> : <Tooltip title="Copy to clipboard">
 								<CopyOutlined
 									onClick={() => copy(secret.username)}
 								/>
@@ -175,13 +181,18 @@ export default function SecretDetails(props) {
 							</>
 							} style={{ borderStyle: 'dashed' }} />
 						</Form.Item>
-
+						
 						<Form.Item label="TOTP" rules={[{ required: true }]} initialValue={totp}>
-							<Input readOnly={true} maxLength={190} value={totp} suffix={<>
-								<Tooltip title="Copy to clipboard">
+							<Input readOnly={true} disabled={!totpSecret} maxLength={190} value={totp} suffix={!totpSecret ?<></> : <>
+								<Tooltip title="Copy to clipboard" >
 									<CopyOutlined
 										onClick={() => {
-											let code = new OTP(totpSecret).getToken();
+											let code = new TOTP({
+												secret: totpSecret,
+												algorithm: 'SHA1',
+												digits: 6,
+												period: 30,
+											}).generate();
 											copy(code || '');
 										}}
 									/>
