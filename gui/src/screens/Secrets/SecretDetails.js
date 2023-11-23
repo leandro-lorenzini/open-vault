@@ -106,7 +106,7 @@ export default function SecretDetails(props) {
 				}} /> : <></>}
 
 		<div style={{ display: 'flex' }}>
-			<div style={{ flex: 0, paddingTop: 2 }}><Avatar shape="square" style={{ backgroundColor: getAvatarColor(props.secret.name) }}>{props.secret.name?.substring(0, 1)}</Avatar> </div>
+			<div style={{ flex: 0, paddingTop: 2 }}><Avatar shape="square" size={28} style={{ backgroundColor: getAvatarColor(props.secret.name) }}>{props.secret.name?.substring(0, 1)}</Avatar> </div>
 			<div style={{ flex: 2, paddingLeft: 8 }}><Typography.Title level={3}>{props.secret.name}</Typography.Title></div>
 			<div style={{ flex: 1, alignContent: 'flex-end', display: 'flex' }}>
 				<Space style={{ marginLeft: 'auto' }}>

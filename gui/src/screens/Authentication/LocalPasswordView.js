@@ -4,7 +4,7 @@ import encryption from '../../services/encryption';
 import { useEffect, useState } from 'react';
 import { LockOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-
+import { WarningOutlined } from '@ant-design/icons';
 
 function LocalPasswordView(props) {
 	const [loading, setLoading] = useState(false);
@@ -141,6 +141,7 @@ function LocalPasswordView(props) {
 				</Form>
 				<Modal
 					title="Reset local password"
+					okButtonProps={{ icon: <WarningOutlined />}}
 					confirmLoading={loading}
 					open={showModal}
 					onOk={deleteKey}
@@ -149,11 +150,10 @@ function LocalPasswordView(props) {
 					onCancel={() => setShowModal(false)}
 				>
 					<p>
-						If you don&apos;t remember your local password, we can help you to reset it,
-						but keep in mind that if you have passwords saved under your personal folder or
+						If you don&apos;t remember your local password, you to reset it,
+						but if you have passwords saved under your personal folder or
 						if you are the only member of any shared folder and this is the only device that
-						you use, you&apos;ll need to ask help from your organization administrator to 
-						recover those passwords.
+						you use, you&apos;ll need to ask the administrator to recover those passwords.
 					</p>
 				</Modal>
 			</>

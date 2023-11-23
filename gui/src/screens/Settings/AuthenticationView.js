@@ -68,6 +68,7 @@ export default function AuthenticationView() {
 				<Form layout='vertical' onFinish={submit}>
 					<Typography.Title level={5}>SSO Configuration</Typography.Title>
 					<Form.Item
+						required
 						name='issuer'
 						initialValue={organization.sso?.issuer}
 						style={{ marginBottom: 35 }}
@@ -76,6 +77,7 @@ export default function AuthenticationView() {
 						<Input placeholder='Issuer' required disabled={!sso}></Input>
 					</Form.Item>
 					<Form.Item
+						required
 						style={{ marginBottom: 35 }}
 						label='Audience' 
 						help="Also know as Service Provider ID, this value should match with the one configured on the identity provider.">
@@ -86,6 +88,7 @@ export default function AuthenticationView() {
 						</Tooltip>}/>
 					</Form.Item>
 					<Form.Item 
+						required
 						name='entryPoint'
 						initialValue={organization.sso?.entryPoint}
 						style={{ marginBottom: 30 }}
@@ -94,6 +97,7 @@ export default function AuthenticationView() {
 						<Input placeholder='Entry Point' required disabled={!sso}></Input>
 					</Form.Item>
 					<Form.Item 
+						required
 						name='certificate'
 						initialValue={organization.sso?.certificate}
 						style={{ marginBottom: 35 }}
@@ -102,7 +106,11 @@ export default function AuthenticationView() {
 						<Input.TextArea disabled={!sso}></Input.TextArea>
 					</Form.Item>
 
-					<Form.Item name='responseSigned' label="Response Signed" style={{ marginBottom: 20 }} initialValue={organization.sso?.responseSigned}>
+					<Form.Item 
+						required name='responseSigned' 
+						label="Response Signed" 
+						style={{ marginBottom: 20 }} 
+						initialValue={organization.sso?.responseSigned}>
 						<Select disabled={!sso} defaultValue={organization.sso?.responseSigned}
 							options={[
 								{ value: false, label: 'No'},
@@ -110,7 +118,12 @@ export default function AuthenticationView() {
 							]}/>
 					</Form.Item>
 
-					<Form.Item name='assertionSigned' label="Assertion Signed" style={{ marginBottom: 20 }} initialValue={organization.sso?.assertionSigned}>
+					<Form.Item 
+						required 
+						name='assertionSigned' 
+						label="Assertion Signed" 
+						style={{ marginBottom: 20 }} 
+						initialValue={organization.sso?.assertionSigned}>
 						<Select disabled={!sso} defaultValue={organization.sso?.assertionSigned}
 							options={[
 								{ value: false, label: 'No'},
@@ -119,6 +132,7 @@ export default function AuthenticationView() {
 					</Form.Item>
 
 					<Form.Item 
+						required
 						name='callback'
 						initialValue={`${serverAddress}/auth/sso/callback/${organization.id}`}
 						style={{ marginBottom: 50 }}

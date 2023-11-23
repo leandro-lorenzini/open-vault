@@ -1,4 +1,5 @@
 import { Button, Space, Typography } from "antd";
+import { MehOutlined } from '@ant-design/icons';
 
 export default function VersionMismatchView(props) {
 
@@ -12,7 +13,10 @@ export default function VersionMismatchView(props) {
 
 	return (
 		<div>
-			<Typography.Title level={2}>Your are using the wrong application version</Typography.Title>
+			<Typography.Title level={2}>
+				<MehOutlined style={{ marginRight: 10 }} />
+				Wrong desktop client version
+			</Typography.Title>
 			<Typography.Title level={4}>
                 It looks like your have installed the application version {process.env.REACT_APP_VERSION} which is not supported by your organization.
 			</Typography.Title>
