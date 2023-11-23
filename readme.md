@@ -31,6 +31,17 @@ A syncronization happens every 15 seconds in the client to make sure evey one ha
 There are two out of the box deployment methods, kubernetes and docker-container, 
 they botth include the configuration for a mongo instance, remove that configuration if you want to use an existing mongodb instance.
 
+#### Environment variables reference
+|Variable               |Required   |Default value                          |Description                                                    |
+|-----------------------|-----------|---------------------------------------|---------------------------------------------------------------|
+|DATABASE_URL           |No         |mongodb://mongo:27017/open-vault       |                                                               |
+|URL                    |Yes        |                                       |The url to access the server, MUST start with ```https://``    |
+|SESSION_SECRET         |Yes        |                                       |A random strong secret for session storage                     |
+|WINDOWS_INSTALLER      |No         |Github Link to the client installer    |Only set this variable if you have built the client by yourself|
+|MAC_INSTALLER          |No         |Github Link to the client installer    |Only set this variable if you have built the client by yourself|
+|LINUX_DEB_INSTALLER    |No         |Github Link to the client installer    |Only set this variable if you have built the client by yourself|
+|LINUX_RPM_INSTALLER    |No         |Github Link to the client installer    |Only set this variable if you have built the client by yourself|
+
 ### Kubernetes
 ```bash
 git clone https://github.com/leandro-lorenzini/open-vault.git && cd open-vault/kubernetes
@@ -49,21 +60,12 @@ docker-compose up -d
 ```
 
 ### Configure the server
-Install the client that has been generated on the first step on your local machine. Once the client starts it will then detect that this is a new server deployment and will ask you to setup the organization. Simply provide the information the if asked during the wizard and that's it.
+The server configuration is done via the Desktop client.
 
-#### Environment variables reference
-|Variable               |Required   |Default value                          |Description                                                    |
-|-----------------------|-----------|---------------------------------------|---------------------------------------------------------------|
-|DATABASE_URL           |No         |mongodb://mongo:27017/open-vault       |                                                               |
-|URL                    |Yes        |                                       |The url to access the server, MUST start with ```https://``    |
-|SESSION_SECRET         |Yes        |                                       |A random strong secret for session storage                     |
-|WINDOWS_INSTALLER      |No         |Github Link to the client installer    |Only set this variable if you have built the client by yourself|
-|MAC_INSTALLER          |No         |Github Link to the client installer    |Only set this variable if you have built the client by yourself|
-|LINUX_DEB_INSTALLER    |No         |Github Link to the client installer    |Only set this variable if you have built the client by yourself|
-|LINUX_RPM_INSTALLER    |No         |Github Link to the client installer    |Only set this variable if you have built the client by yourself|
+Download and install the desktop client (Under the release page) that matched the installed server version. You can also build the client by your self by following the instreuction on the next section of this page. Once the client starts, you'll enter the server address and the client will then detect that this is a new server deployment and will ask you to setup the organization. Simply provide the information the if asked during the wizard and that's it.
 
 
-### Building the client by yourself
+## Building the client by yourself
 The advantage of building it yourself is that you can set the default server address, so if you are deploying to multiple users, they won't have to manually set the server address.
 
 Another adventage is that you can sign the software during the build using your organization key for an easier deployment later.
